@@ -74,6 +74,6 @@ When the Reverb shop opens, also update the "store coming soon" notes on `/store
 
 ## Deploy
 
-Push to `main`. Netlify builds with the settings in `netlify.toml` (`npm run build`, publish `dist`, Node 24) and redirects `dimoguitars.com` to `www.dimoguitars.com`.
+Push to `main`. Netlify builds with the settings in `netlify.toml` (`npm run build`, publish `dist`, Node 24). `www.dimoguitars.com` should be the primary domain in Netlify's Domain management; Netlify then redirects `dimoguitars.com` to it.
 
 A build from scratch takes a few minutes because every photo is encoded to AVIF and WebP. Later builds reuse cached images when Netlify keeps its build cache.

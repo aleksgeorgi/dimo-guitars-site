@@ -7,18 +7,8 @@
   # Astro needs Node 22.23.4 or newer.
   NODE_VERSION = "24"
 
-# Apex to www. www.dimoguitars.com is the primary domain.
-[[redirects]]
-  from = "https://dimoguitars.com/*"
-  to = "https://www.dimoguitars.com/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "http://dimoguitars.com/*"
-  to = "https://www.dimoguitars.com/:splat"
-  status = 301
-  force = true
+# No apex/www redirect here: Netlify redirects to whichever domain is set as
+# primary in Domain management, and a rule here would loop if the two disagree.
 
 # Built assets have content hashes in their names, so they can be cached forever.
 [[headers]]
