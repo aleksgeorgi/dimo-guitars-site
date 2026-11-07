@@ -31,6 +31,8 @@ export const site = {
   description:
     'Handmade electric guitars shaped by the classical violin-making tradition, built one at a time by Dimo in his New York workshop.',
   email: 'dimoguitarsnyc@gmail.com',
+  // EmailOctopus landing page; used until the inline embed is pasted into Newsletter.astro.
+  newsletterUrl: 'https://dimoguitars.eo.page/newsletter',
   location: 'NY, NY',
   // Guitar whose photos illustrate the three signature sections on About.
   aboutGuitarId: 'D-105',

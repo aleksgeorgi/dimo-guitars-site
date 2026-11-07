@@ -27,7 +27,7 @@ const storeComing = available && !onReverb;
 type Action = { label: string; href: string; external?: boolean; subject?: string };
 const actions: Action[] = [];
 if (onReverb) actions.push({ label: 'Buy on Reverb', href: guitar.reverbUrl, external: true });
-else if (available) actions.push({ label: 'Join the mailing list', href: '#newsletter' });
+else if (available) actions.push({ label: 'Join the mailing list', href: site.newsletterUrl, external: true });
 if (sold) actions.push({ label: 'Ask about a similar instrument', href: '#contact', subject: `Instrument similar to ${id}` });
 else actions.push({ label: 'Ask Dimo a question', href: '#contact', subject: `Question about ${name}` });
 

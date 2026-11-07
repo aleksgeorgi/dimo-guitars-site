@@ -31,7 +31,7 @@ const ogImage = getPhoto(ogGuitar.id, 'front').image?.src;
       </p>
       <p class="mt-4 max-w-[36em] border-l-2 border-brass pl-4 text-[15px] text-walnut">
         Our online store is coming soon.{' '}
-        <a href="#newsletter" class="underline underline-offset-2">Join the mailing list</a> to be notified when guitars
+        <a href={site.newsletterUrl} target="_blank" rel="noopener" class="underline underline-offset-2">Join the mailing list</a> to be notified when guitars
         are available for purchase.
       </p>
     </div>
@@ -112,7 +112,7 @@ const ogImage = getPhoto(ogGuitar.id, 'front').image?.src;
         </p>
       </div>
       <div class="flex flex-wrap gap-2.5">
-        <a href="#newsletter" class="btn btn-primary">Join the mailing list</a>
+        <a href={site.newsletterUrl} target="_blank" rel="noopener" class="btn btn-primary">Join the mailing list</a>
         <a href="#contact" class="btn btn-secondary">Ask a question</a>
       </div>
     </div>
