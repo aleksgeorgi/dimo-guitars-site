@@ -85,6 +85,7 @@ const fill = 'absolute inset-0 h-full w-full object-contain';
           <span data-lightbox-counter>1 / {viewable.length}</span>
           <span class="mx-1.5" aria-hidden="true">·</span>
           <span data-lightbox-caption>{viewable[0].label}</span>
+          <span class="ml-3 hidden sm:inline" data-lightbox-hint>Click the photo to zoom</span>
         </p>
         <button
           type="button"
@@ -100,17 +101,21 @@ const fill = 'absolute inset-0 h-full w-full object-contain';
 
       <div class="relative min-h-0 flex-1" data-lightbox-stage>
         {viewable.map((p, i) => (
-          <figure data-lightbox-slide data-label={p.label} hidden={i !== 0} class="absolute inset-0 m-0 px-[clamp(8px,6vw,88px)] pb-6">
+          <figure
+            data-lightbox-slide
+            data-label={p.label}
+            hidden={i !== 0}
+            class="absolute inset-0 m-0 overflow-hidden px-[clamp(8px,6vw,88px)] pb-6">
             <Picture
               src={p.image!}
               alt={p.alt}
               widths={widthsFor(p.image!, [800, 1200, 1600])}
               sizes="100vw"
               formats={['avif']}
-          fallbackFormat="webp"
+              fallbackFormat="webp"
               loading="lazy"
               pictureAttributes={{ class: 'block h-full w-full' }}
-              class="h-full w-full object-contain"
+              class="h-full w-full cursor-zoom-in object-contain transition-transform duration-200 ease-out"
             />
           </figure>
         ))}
@@ -169,9 +174,45 @@ const fill = 'absolute inset-0 h-full w-full object-contain';
     const counter = dialog.querySelector<HTMLElement>('[data-lightbox-counter]')!;
     const caption = dialog.querySelector<HTMLElement>('[data-lightbox-caption]')!;
     const stage = dialog.querySelector<HTMLElement>('[data-lightbox-stage]')!;
+    const hint = dialog.querySelector<HTMLElement>('[data-lightbox-hint]')!;
+    const ZOOM = 2.5;
     let index = 0;
+    let zoomed = false;
+
+    const imgOf = (slide: HTMLElement) => slide.querySelector('img')!;
+
+    // Measured against the unscaled layout box, so the origin doesn't drift while zoomed.
+    const aim = (slide: HTMLElement, x: number, y: number) => {
+      const img = imgOf(slide);
+      const box = slide.getBoundingClientRect();
+      const px = ((x - box.left - img.offsetLeft) / img.offsetWidth) * 100;
+      const py = ((y - box.top - img.offsetTop) / img.offsetHeight) * 100;
+      const clamp = (v: number) => Math.min(100, Math.max(0, v));
+      img.style.transformOrigin = `${clamp(px)}% ${clamp(py)}%`;
+    };
+
+    const setZoom = (on: boolean, x?: number, y?: number) => {
+      const slide = slides[index];
+      const img = imgOf(slide);
+      zoomed = on;
+      if (on && x !== undefined && y !== undefined) aim(slide, x, y);
+      img.style.transform = on ? `scale(${ZOOM})` : '';
+      img.classList.toggle('cursor-zoom-in', !on);
+      img.classList.toggle('cursor-zoom-out', on);
+      stage.style.touchAction = on ? 'none' : '';
+      hint.textContent = on ? 'Move to look around · click to zoom out' : 'Click the photo to zoom';
+    };
+
+    slides.forEach((slide) => {
+      const img = imgOf(slide);
+      img.addEventListener('click', (e) => setZoom(!zoomed, e.clientX, e.clientY));
+      slide.addEventListener('pointermove', (e) => {
+        if (zoomed) aim(slide, e.clientX, e.clientY);
+      });
+    });
 
     const show = (i: number) => {
+      if (zoomed) setZoom(false);
       index = (i + slides.length) % slides.length;
       slides.forEach((slide, j) => (slide.hidden = j !== index));
       counter.textContent = `${index + 1} / ${slides.length}`;
@@ -187,6 +228,7 @@ const fill = 'absolute inset-0 h-full w-full object-contain';
     });
 
     dialog.addEventListener('close', () => {
+      if (zoomed) setZoom(false);
       document.documentElement.style.overflow = '';
     });
 
@@ -213,6 +255,7 @@ const fill = 'absolute inset-0 h-full w-full object-contain';
       { passive: true },
     );
     stage.addEventListener('touchend', (e) => {
+      if (zoomed) return;
       const dx = e.changedTouches[0].clientX - startX;
       const dy = e.changedTouches[0].clientY - startY;
       if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) show(index + (dx < 0 ? 1 : -1));

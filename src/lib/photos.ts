@@ -1,12 +1,13 @@
 import type { ImageMetadata } from 'astro';
 
+// Gallery order: tallest frames first.
 export const angles = [
   { key: 'front', suffix: '_Front_Full_Body.jpg', aspect: '5 / 7', alt: 'front', label: 'Front, full body' },
   { key: 'back', suffix: '_Back_Full_Body.jpg', aspect: '5 / 7', alt: 'back', label: 'Back, full body' },
+  { key: 'headstock', suffix: '_Headstocks.jpg', aspect: '5 / 7', alt: 'headstock', label: 'Headstock' },
   { key: 'frontCrop', suffix: '_Front_Body_Crop.jpg', aspect: '4 / 5', alt: 'front body detail', label: 'Front, body close-up' },
   { key: 'backCrop', suffix: '_Back_Body_Crop.jpg', aspect: '4 / 5', alt: 'back body detail', label: 'Back, body close-up' },
   { key: 'side', suffix: '_Side_Body.jpg', aspect: '7 / 5', alt: 'side', label: 'Side of body' },
-  { key: 'headstock', suffix: '_Headstocks.jpg', aspect: '5 / 7', alt: 'headstock', label: 'Headstock' },
 ] as const;
 
 export type AngleKey = (typeof angles)[number]['key'];

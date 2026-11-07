@@ -76,8 +76,9 @@ async function run(job) {
   try {
     const src = await stat(job.from);
     bytesIn += src.size;
-    if (!force && existsSync(job.to) && (await stat(job.to)).mtimeMs >= src.mtimeMs) {
-      bytesOut += (await stat(job.to)).size;
+    const out = existsSync(job.to) ? await stat(job.to) : null;
+    if (!force && out && out.mtimeMs >= src.mtimeMs) {
+      bytesOut += out.size;
       skipped++;
       return;
     }
