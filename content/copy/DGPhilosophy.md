@@ -2,7 +2,7 @@
 
 *The Spirit of Tradition. The Art of Originality.*
 
-The creation of a fine guitar begins with a philosophy — a belief that an instrument should embody more than its function. It should express the harmony of craftsmanship, engineering, natural beauty, and artistic individuality.
+The creation of a fine guitar begins with a philosophy: a belief that an instrument should embody more than its function. It should express the harmony of craftsmanship, engineering, natural beauty, and artistic individuality.
 
 At **Dimo Guitars**, our philosophy is rooted in the timeless elegance of traditional stringed instruments, where every curve, every joint, and every detail serves a greater vision of balance and refinement.
 
@@ -40,13 +40,13 @@ A narrow, continuous border of natural body wood surrounds the maple, concealing
 
 This construction creates a harmonious visual relationship between the contrasting woods, allowing the natural materials themselves to define the instrument's character.
 
-The result is a clean, sculptural, and refined appearance that recalls the purity of traditional violin making — where beauty is achieved through the form and craftsmanship of wood rather than the addition of unnecessary ornamentation.
+The result is a clean, sculptural, and refined appearance that recalls the purity of traditional violin making, where beauty is achieved through the form and craftsmanship of wood rather than the addition of unnecessary ornamentation.
 
 ## Signature Sculpted Headstock
 
 *The Crown of the Instrument*
 
-The headstock is more than the termination of the neck. It is the visual signature of the instrument — a place where artistic identity takes form.
+The headstock is more than the termination of the neck. It is the visual signature of the instrument: a place where artistic identity takes form.
 
 Our distinctive headstock is defined by a gracefully sculpted silhouette, with a rounded crown, flowing contours, and two symmetrically positioned ornamental openings that lend the design its unmistakable character.
 
@@ -70,4 +70,4 @@ Our aspiration is not simply to recreate the classic electric guitar, nor to aba
 
 It is to carry those traditions forward through thoughtful innovation, careful craftsmanship, and an enduring respect for the beauty of the instrument.
 
-**Dimo Guitars — The Spirit of Tradition. The Art of Originality.**
+**Dimo Guitars: The Spirit of Tradition. The Art of Originality.**

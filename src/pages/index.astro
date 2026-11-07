@@ -1,0 +1,157 @@
+---
+import { Image, Picture } from 'astro:assets';
+import portrait from '../assets/brand/DimoPortrait.jpg';
+import signature from '../assets/brand/DimoSignature_BlackTrimmed.png';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GuitarCard from '../components/GuitarCard.astro';
+import GuitarPhoto from '../components/GuitarPhoto.astro';
+import { models } from '../data/models';
+import { site } from '../data/site';
+import { signatures } from '../data/signatures';
+import { countByModel, featuredGuitars, guitars } from '../lib/inventory';
+import { getPhoto } from '../lib/photos';
+
+const featured = featuredGuitars();
+const hero = getPhoto(featured[0]?.id ?? site.aboutGuitarId, 'side');
+const signatureCards = signatures.map((s) => ({ ...s, photo: getPhoto(site.aboutGuitarId, s.angle) }));
+
+const sectionPad = 'container-site pt-[clamp(64px,8vw,112px)] pb-10';
+---
+
+<BaseLayout ogImage={hero.image?.src}>
+  <section class="container-site flex flex-wrap items-center gap-14 py-[clamp(48px,7vw,96px)]">
+    <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-6">
+      <p class="label">Handmade electric guitars · <span class="whitespace-nowrap">{site.location}</span></p>
+      <h1 class="display">
+        The Spirit of Tradition.<br /><span class="italic">The Art of Originality.</span>
+      </h1>
+      <p class="lead max-w-[34em]">
+        Electric guitars shaped by the classical violin-making tradition with natural wood, pure form and honest
+        construction, built one at a time by Dimo, a fine artist turned luthier.
+      </p>
+      <div class="flex flex-wrap gap-3.5 pt-2">
+        <a href="/store" class="btn btn-primary min-h-[50px]">Explore the collection</a>
+        <a href="/about" class="btn btn-secondary min-h-[50px]">Our philosophy</a>
+      </div>
+    </div>
+    <div class="min-w-0 flex-[1_1_520px]">
+      <GuitarPhoto photo={hero} sizes="(min-width: 1240px) 620px, (min-width: 1000px) 50vw, 100vw" eager />
+    </div>
+  </section>
+
+  <section aria-label="At a glance" class="border-y border-rule">
+    <div
+      class="container-site flex flex-wrap justify-between gap-4 py-[22px] font-serif text-[22px] italic text-walnut">
+      <span>One maker</span><span aria-hidden="true" class="text-brass">·</span>
+      <span>Five models</span><span aria-hidden="true" class="text-brass">·</span>
+      <span>Every instrument one of a kind</span><span aria-hidden="true" class="text-brass">·</span>
+      <span>Three decades at the bench</span>
+    </div>
+  </section>
+
+  <section class={sectionPad} aria-labelledby="signatures-title">
+    <div class="mb-12 flex flex-wrap items-end justify-between gap-6">
+      <h2 id="signatures-title" class="heading">Three signatures of a Dimo guitar</h2>
+      <a href="/about" class="text-link">Read the philosophy →</a>
+    </div>
+    <ul class="grid grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-6 lg:gap-10">
+      {
+        signatureCards.map((s) => (
+          <li>
+            <a href={`/about#${s.anchor}`} class="group flex flex-col gap-4 text-ink no-underline hover:text-ink">
+              <GuitarPhoto
+                photo={{ ...s.photo, aspect: '4 / 5' }}
+                sizes="(min-width: 1240px) 380px, (min-width: 640px) 30vw, 100vw"
+              />
+              <p class="font-serif text-[24px] leading-none text-numeral">{s.numeral}</p>
+              <h3 class="font-serif text-[24px] leading-[1.15] font-medium group-hover:underline group-hover:underline-offset-4 lg:text-[28px]">
+                {s.title}
+              </h3>
+              <p class="text-walnut">{s.summary}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {
+    featured.length > 0 && (
+      <section class={sectionPad} aria-labelledby="featured-title">
+        <div class="mb-10 flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p class="label mb-2">Fresh from the bench</p>
+            <h2 id="featured-title" class="heading">
+              Featured instruments
+            </h2>
+          </div>
+          <a href="/store" class="text-link">
+            See all {guitars.length} →
+          </a>
+        </div>
+        <ul class="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-7 lg:grid-cols-4">
+          {featured.map((g) => (
+            <li>
+              <GuitarCard guitar={g} />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section id="models" class:list={[sectionPad, 'scroll-mt-4']} aria-labelledby="models-title">
+    <p class="label mb-2">The models</p>
+    <h2 id="models-title" class="heading mb-10">Five designs, each one of a kind</h2>
+    <ul class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] border-t border-rule">
+      {
+        models.map((m) => (
+          <li class="border-b border-rule">
+            <a
+              href={`/store?model=${m.code}`}
+              class="group flex h-full flex-col gap-2.5 py-7 pr-[22px] text-ink no-underline hover:text-ink">
+              <span class="font-serif text-[64px] leading-none font-normal">
+                {m.code}
+                <span class="sr-only">, {m.fullName}</span>
+              </span>
+              <span class="text-[14px] text-walnut">Description coming soon.</span>
+              <span class="text-[13px] font-medium group-hover:text-navy group-hover:underline">
+                {countByModel(m.code)} instruments →
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="mt-[clamp(64px,8vw,112px)] bg-sawdust" aria-labelledby="maker-title">
+    <div class="container-site flex flex-wrap items-center gap-14 py-[clamp(56px,7vw,96px)]">
+      <div class="mx-auto min-w-0 max-w-[520px] flex-[1_1_360px]">
+        <Picture
+          src={portrait}
+          alt="Portrait of Dimo, the maker of Dimo Guitars"
+          widths={[400, 700, 1000, 1200]}
+          sizes="(min-width: 1240px) 520px, (min-width: 900px) 42vw, 100vw"
+          formats={['avif']}
+          fallbackFormat="webp"
+          class="aspect-[4/5] h-auto w-full bg-[#CFCAC2] object-cover"
+        />
+      </div>
+      <div class="flex min-w-0 flex-[1_1_460px] flex-col gap-5">
+        <p class="label">The maker</p>
+        <h2 id="maker-title" class="heading">A painter's eye, a luthier's hands</h2>
+        <p class="text-[17px] text-walnut">
+          Trained as a fine artist in Europe and at New York's National Academy of Fine Arts, Dimo found his calling in
+          guitar making in the 1990s.
+        </p>
+        <p class="text-[17px] text-walnut">
+          For three decades he has refined his craft in his New York workshop, designing his own jigs and templates, and
+          building every instrument himself, by hand.
+        </p>
+        <Image src={signature} alt="Dimo" width={170} densities={[1, 2]} class="mt-3 h-auto w-[170px]" />
+        <a href="/about" class="text-link self-start pt-2">Read our philosophy →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

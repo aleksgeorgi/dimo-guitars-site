@@ -1,0 +1,10 @@
+# Dependencies and build output
+node_modules/
+dist/
+.astro/
+.netlify/
+
+# Secrets and OS clutter
+.env
+.env.*
+.DS_Store

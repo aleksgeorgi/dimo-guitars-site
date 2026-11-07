@@ -1,0 +1,70 @@
+---
+import { Picture } from 'astro:assets';
+import { priceLabel, type Guitar } from '../lib/inventory';
+import { getPhoto, widthsFor } from '../lib/photos';
+
+type Props = {
+  guitar: Guitar;
+  eager?: boolean;
+  sizes?: string;
+};
+
+const {
+  guitar,
+  eager = false,
+  sizes = '(min-width: 1240px) 280px, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw',
+} = Astro.props;
+
+const front = getPhoto(guitar.id, 'front');
+const back = getPhoto(guitar.id, 'back');
+const sold = guitar.status === 'sold';
+const cardWidths = [300, 450, 600, 900];
+const imgClass = 'absolute inset-0 h-full w-full object-contain';
+---
+
+<a href={`/store/${guitar.slug}`} class="group flex flex-col gap-4 text-ink no-underline hover:text-ink">
+  <div class="relative aspect-[5/7] overflow-hidden bg-photo">
+    {
+      front.image && (
+        <Picture
+          src={front.image}
+          alt={front.alt}
+          widths={widthsFor(front.image, cardWidths)}
+          sizes={sizes}
+          formats={['avif']}
+          fallbackFormat="webp"
+          loading={eager ? 'eager' : 'lazy'}
+          class={imgClass}
+        />
+      )
+    }
+    {
+      back.image && (
+        <Picture
+          src={back.image}
+          alt=""
+          widths={widthsFor(back.image, cardWidths)}
+          sizes={sizes}
+          formats={['avif']}
+          fallbackFormat="webp"
+          loading="lazy"
+          class={`${imgClass} opacity-0 transition-opacity duration-250 ease-out group-hover:opacity-100 group-focus-visible:opacity-100`}
+        />
+      )
+    }
+    {
+      sold && (
+        <span class="absolute top-3 left-3 bg-ink px-2.5 py-[5px] text-[11px] uppercase tracking-[0.16em] text-paper">
+          Sold
+        </span>
+      )
+    }
+  </div>
+  <div class="flex items-baseline justify-between gap-3 border-t border-rule pt-3">
+    <div class="min-w-0">
+      <p class="text-[11px] uppercase tracking-[0.2em] text-muted">No. {guitar.id}</p>
+      <p class="mt-0.5 font-serif text-[22px] leading-[1.15] font-medium sm:text-[26px]">{guitar.model.fullName}</p>
+    </div>
+    <p class:list={['text-right text-[15px] font-medium', sold && 'text-muted']}>{priceLabel(guitar)}</p>
+  </div>
+</a>

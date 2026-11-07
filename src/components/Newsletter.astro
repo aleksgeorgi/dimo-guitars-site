@@ -1,0 +1,38 @@
+---
+// Paste the EmailOctopus inline form embed here. The free plan allows one form,
+// so this component is rendered once per page, in the footer.
+const embed = '';
+---
+
+<div class="flex min-w-0 flex-[1_1_380px] flex-col gap-4">
+  <h2 class="font-serif text-[40px] font-normal leading-[1.1]">Letters from the workshop</h2>
+  <p class="text-on-navy-soft">
+    Be the first to see new instruments when they leave the bench. A few emails a year, never more.
+  </p>
+
+  {
+    embed ? (
+      <div class="newsletter-embed" set:html={embed} />
+    ) : (
+      <form class="flex flex-wrap gap-2.5 pt-1.5" aria-describedby="newsletter-status" onsubmit="return false">
+        <label for="newsletter-email" class="sr-only">
+          Email address
+        </label>
+        <input
+          id="newsletter-email"
+          type="email"
+          placeholder="Your email address"
+          disabled
+          class="min-h-[44px] min-w-0 flex-[1_1_240px] rounded-[2px] border border-on-navy bg-transparent px-4 text-[15px] text-on-navy placeholder:text-on-navy-muted disabled:cursor-not-allowed disabled:opacity-60"
+        />
+        <button
+          type="submit"
+          disabled
+          class="min-h-[44px] rounded-[2px] bg-on-navy px-6 text-[15px] font-medium text-ink disabled:cursor-not-allowed disabled:opacity-60">
+          Subscribe
+        </button>
+        <p id="newsletter-status" class="w-full text-[13px] text-on-navy-muted">Mailing list coming soon</p>
+      </form>
+    )
+  }
+</div>

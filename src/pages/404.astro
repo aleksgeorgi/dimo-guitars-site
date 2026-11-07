@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title={`Page not found | ${site.name}`} noindex>
+  <PageIntro label="Page not found" title="This page has left the bench">
+    <p class="lead">The page you were looking for isn’t here. The instruments are all in the Store.</p>
+    <div class="flex flex-wrap gap-3.5">
+      <a href="/store" class="btn btn-primary">Explore the collection</a>
+      <a href="/" class="btn btn-secondary">Back to home</a>
+    </div>
+  </PageIntro>
+</BaseLayout>

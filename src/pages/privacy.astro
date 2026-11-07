@@ -1,0 +1,26 @@
+---
+// TODO: review privacy copy before launch.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title={`Privacy | ${site.name}`} description="How Dimo Guitars handles your email address.">
+  <PageIntro label="Privacy" title="Your privacy">
+    <div class="flex flex-col gap-4 text-[17px] text-walnut">
+      <p>
+        If you join our mailing list, we collect your email address through EmailOctopus. We use it only to send
+        occasional updates about new instruments from the workshop.
+      </p>
+      <p>You can unsubscribe at any time using the link at the bottom of every email.</p>
+      <p>
+        If you write to us through the contact form, we use your email address, phone number and message only to reply
+        to you.
+      </p>
+      <p>We never sell or share your data.</p>
+      <p>
+        Questions? Write to <a href={`mailto:${site.email}`} class="underline underline-offset-2">{site.email}</a>.
+      </p>
+    </div>
+  </PageIntro>
+</BaseLayout>

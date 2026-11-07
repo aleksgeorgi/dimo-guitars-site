@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from './PageIntro.astro';
+import { site } from '../data/site';
+
+type Props = { title: string };
+const { title } = Astro.props;
+---
+
+<BaseLayout title={`${title} | ${site.name}`} noindex>
+  <PageIntro title={title}>
+    <p class="lead">Coming soon.</p>
+    <div>
+      <a href="/store" class="btn btn-primary">Explore the collection</a>
+    </div>
+  </PageIntro>
+</BaseLayout>

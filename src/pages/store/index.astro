@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GuitarCard from '../../components/GuitarCard.astro';
+import { site } from '../../data/site';
+import { models } from '../../data/models';
+import { countByModel, getGuitar, guitars } from '../../lib/inventory';
+import { getPhoto } from '../../lib/photos';
+
+const filters = [
+  { value: 'all', label: `All models (${guitars.length})` },
+  ...models.map((m) => ({ value: m.code, label: `${m.fullName} (${countByModel(m.code)})` })),
+];
+
+const ogGuitar = getGuitar(site.aboutGuitarId) ?? guitars[0];
+const ogImage = getPhoto(ogGuitar.id, 'front').image?.src;
+---
+
+<BaseLayout
+  title={`Store | Handmade Electric Guitars | ${site.name}`}
+  description="Every Dimo guitar is one of a kind, built by hand in New York. Browse the full collection of handmade electric guitars."
+  ogImage={ogImage}>
+  <section
+    class="container-site flex flex-wrap items-end justify-between gap-8 pt-[clamp(48px,6vw,80px)] pb-7">
+    <div class="min-w-0 flex-[1_1_480px]">
+      <p class="label mb-2.5">The collection</p>
+      <h1 class="mb-4 font-serif text-[clamp(44px,5vw,68px)] leading-[1.04] font-normal">
+        Every instrument is one of a kind
+      </h1>
+      <p class="max-w-[36em] text-[17px] text-walnut">
+        Each one of a kind guitar is built by hand by Dimo in his workshop.
+      </p>
+      <p class="mt-4 max-w-[36em] border-l-2 border-brass pl-4 text-[15px] text-walnut">
+        Our online store is coming soon.{' '}
+        <a href="#newsletter" class="underline underline-offset-2">Join the mailing list</a> to be notified when guitars
+        are available for purchase.
+      </p>
+    </div>
+    <p class="font-serif text-[22px] text-walnut italic" data-count aria-live="polite">
+      {guitars.length} instruments
+    </p>
+  </section>
+
+  <div class="container-site">
+    <div role="group" aria-label="Filter by model" class="flex flex-wrap gap-2.5 border-y border-rule py-[18px]">
+      {
+        filters.map((f) => (
+          <button
+            type="button"
+            data-filter={f.value}
+            aria-pressed={f.value === 'all' ? 'true' : 'false'}
+            class="min-h-[44px] cursor-pointer rounded-full border border-[#CFC7BB] px-[18px] text-[14px] font-medium text-ink transition-colors duration-200 hover:border-ink aria-pressed:border-navy aria-pressed:bg-navy aria-pressed:text-white">
+            {f.label}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <section class="container-site pt-10 pb-6" aria-label="Guitars">
+    <ul class="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-4" data-store-grid>
+      {
+        guitars.map((g, i) => (
+          <li data-model={g.model.code}>
+            <GuitarCard guitar={g} eager={i < 4} />
+          </li>
+        ))
+      }
+    </ul>
+    <p class="hidden py-10 text-center text-walnut italic" data-empty>No instruments in this model right now.</p>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const chips = [...document.querySelectorAll('[data-filter]')];
+      const cards = [...document.querySelectorAll('[data-store-grid] > [data-model]')];
+      const count = document.querySelector('[data-count]');
+      const empty = document.querySelector('[data-empty]');
+      const valid = new Set(chips.map((c) => c.dataset.filter));
+
+      function apply(model, updateUrl) {
+        if (!valid.has(model)) model = 'all';
+        chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.filter === model)));
+        let shown = 0;
+        cards.forEach((card) => {
+          const show = model === 'all' || card.dataset.model === model;
+          card.hidden = !show;
+          if (show) shown++;
+        });
+        count.textContent = `${shown} instruments`;
+        empty.classList.toggle('hidden', shown > 0);
+        if (updateUrl) {
+          const url = new URL(location.href);
+          if (model === 'all') url.searchParams.delete('model');
+          else url.searchParams.set('model', model);
+          history.replaceState(null, '', url);
+        }
+      }
+
+      chips.forEach((c) => c.addEventListener('click', () => apply(c.dataset.filter, true)));
+      const param = new URLSearchParams(location.search).get('model');
+      apply(param ? param.toUpperCase() : 'all', false);
+    })();
+  </script>
+
+  <section class="container-site pt-12 pb-[88px]">
+    <div class="flex flex-wrap items-center justify-between gap-6 border border-rule p-[clamp(24px,3vw,32px)]">
+      <div class="min-w-0 flex-[1_1_420px]">
+        <h2 class="mb-1.5 font-serif text-[28px] leading-[1.2] font-medium">How buying works</h2>
+        <p class="text-walnut">
+          Our online store is coming soon. Join the mailing list to be notified when guitars are available for purchase.
+          Have a question about an instrument? Write to Dimo. He answers personally.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-2.5">
+        <a href="#newsletter" class="btn btn-primary">Join the mailing list</a>
+        <a href="#contact" class="btn btn-secondary">Ask a question</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

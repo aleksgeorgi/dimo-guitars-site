@@ -1,0 +1,141 @@
+---
+import Wordmark from './Wordmark.astro';
+import { navPages, normalizePath, site } from '../data/site';
+
+const path = normalizePath(Astro.url.pathname);
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`));
+const isStore = (href: string) => href === '/store';
+---
+
+<header class="border-b border-rule">
+  <div class="container-site flex items-center justify-between gap-5 py-[22px]">
+    <Wordmark />
+
+    <nav aria-label="Main" class="hidden flex-wrap items-center gap-x-[26px] gap-y-1.5 text-[14px] font-medium md:flex">
+      {
+        navPages.map((p) =>
+          isStore(p.href) ? (
+            <a
+              href={p.href}
+              aria-current={isCurrent(p.href) ? 'page' : undefined}
+              class="inline-flex min-h-[44px] items-center rounded-[2px] bg-navy px-[18px] text-white no-underline transition-colors hover:bg-[#162b44] hover:text-white">
+              {p.label}
+            </a>
+          ) : (
+            <a
+              href={p.href}
+              aria-current={isCurrent(p.href) ? 'page' : undefined}
+              class="border-b border-transparent py-1 no-underline aria-[current=page]:border-ink">
+              {p.label}
+            </a>
+          ),
+        )
+      }
+    </nav>
+
+    <button
+      type="button"
+      class="-mr-2.5 inline-flex h-11 w-11 items-center justify-center text-ink md:hidden"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+      data-menu-open>
+      <span class="sr-only">Open menu</span>
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 7h18M3 12h18M3 17h18"></path>
+      </svg>
+    </button>
+  </div>
+
+  <dialog
+    id="mobile-menu"
+    aria-label="Menu"
+    class="menu fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none flex-col bg-paper p-0 text-ink open:flex">
+    <div class="container-site flex w-full items-center justify-between gap-5 border-b border-rule py-[22px]">
+      <Wordmark size="menu" />
+      <button type="button" class="-mr-2.5 inline-flex h-11 w-11 items-center justify-center" data-menu-close autofocus>
+        <span class="sr-only">Close menu</span>
+        <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M5 5l14 14M19 5L5 19"></path>
+        </svg>
+      </button>
+    </div>
+
+    <nav aria-label="Main" class="container-site flex w-full flex-1 flex-col pt-6">
+      <ul class="flex flex-col">
+        {
+          navPages
+            .filter((p) => !isStore(p.href))
+            .map((p) => (
+              <li class="border-b border-rule">
+                <a
+                  href={p.href}
+                  aria-current={isCurrent(p.href) ? 'page' : undefined}
+                  class="block py-4 font-serif text-[36px] leading-tight no-underline aria-[current=page]:italic">
+                  {p.label}
+                </a>
+              </li>
+            ))
+        }
+      </ul>
+      {
+        navPages
+          .filter((p) => isStore(p.href))
+          .map((p) => (
+            <a href={p.href} aria-current={isCurrent(p.href) ? 'page' : undefined} class="btn btn-primary mt-8 w-full">
+              {p.label}
+            </a>
+          ))
+      }
+      <div class="mt-auto flex flex-col gap-1 py-8 text-[14px] text-walnut">
+        <a href={`mailto:${site.email}`} class="no-underline">{site.email}</a>
+        <span>{site.location}</span>
+      </div>
+    </nav>
+  </dialog>
+</header>
+
+<style>
+  .menu[open] {
+    animation: menu-fade 200ms ease-out;
+  }
+
+  .menu::backdrop {
+    background: transparent;
+  }
+
+  @keyframes menu-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  const menu = document.getElementById('mobile-menu') as HTMLDialogElement | null;
+  const openButton = document.querySelector<HTMLButtonElement>('[data-menu-open]');
+  const closeButton = menu?.querySelector<HTMLButtonElement>('[data-menu-close]');
+
+  if (menu && openButton) {
+    openButton.addEventListener('click', () => {
+      menu.showModal();
+      openButton.setAttribute('aria-expanded', 'true');
+      document.documentElement.style.overflow = 'hidden';
+    });
+
+    closeButton?.addEventListener('click', () => menu.close());
+
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => menu.close()));
+
+    menu.addEventListener('close', () => {
+      openButton.setAttribute('aria-expanded', 'false');
+      document.documentElement.style.overflow = '';
+    });
+
+    window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+      if (e.matches && menu.open) menu.close();
+    });
+  }
+</script>
