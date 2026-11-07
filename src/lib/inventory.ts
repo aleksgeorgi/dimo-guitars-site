@@ -13,6 +13,9 @@ export const specColumns = [
   { key: 'pickups', label: 'Pickups' },
 ] as const;
 
+// Shown when the CSV cell is empty; a value in the CSV overrides it.
+const specDefaults: Record<string, string> = { pickups: 'Dimo Humbucker Pickups' };
+
 export type Guitar = {
   id: string;
   slug: string;
@@ -22,6 +25,7 @@ export type Guitar = {
   reverbUrl: string;
   featured: boolean;
   specs: { label: string; value: string }[];
+  specsPending: boolean;
   notes: string;
 };
 
@@ -58,8 +62,9 @@ function parse(csv: string): Guitar[] {
         reverbUrl: row.reverb_url,
         featured: row.featured === 'true',
         specs: specColumns
-          .filter((c) => row[c.key])
-          .map((c) => ({ label: c.label, value: row[c.key] })),
+          .map((c) => ({ label: c.label, value: row[c.key] || specDefaults[c.key] }))
+          .filter((s) => s.value),
+        specsPending: specColumns.every((c) => !row[c.key]),
         notes: row.notes,
       };
     });
