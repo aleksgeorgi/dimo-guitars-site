@@ -11,7 +11,7 @@ import '../styles/global.css';
 import TopBar from '../components/TopBar.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { isHiddenPath, site } from '../data/site';
+import { isHiddenPath, normalizePath, site } from '../data/site';
 
 type Props = {
   title?: string;
@@ -23,7 +23,7 @@ type Props = {
 const { title, description = site.description, noindex = false, ogImage } = Astro.props;
 
 const fullTitle = title ?? `${site.name} | Handmade Electric Guitars | ${site.location}`;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const canonical = new URL(normalizePath(Astro.url.pathname), Astro.site);
 const hidden = noindex || isHiddenPath(Astro.url.pathname);
 const ogImageUrl = ogImage ? new URL(ogImage, Astro.site) : undefined;
 ---

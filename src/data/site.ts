@@ -17,7 +17,8 @@ export const navPages = pages.filter((p) => p.show);
 const hiddenHrefs = pages.filter((p) => !p.show).map((p) => p.href);
 
 export function normalizePath(pathname: string): string {
-  return pathname.replace(/\/+$/, '') || '/';
+  // At build time Astro.url ends in .html (build.format 'file').
+  return pathname.replace(/(\/index)?\.html$/, '').replace(/\/+$/, '') || '/';
 }
 
 export function isHiddenPath(pathname: string): boolean {
