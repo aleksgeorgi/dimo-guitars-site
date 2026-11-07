@@ -55,7 +55,10 @@ const missing = {};
 const extras = {};
 
 for (const id of toImport) {
-  const files = (await readdir(join(source, id))).filter((f) => !f.startsWith('.'));
+  // Subfolders (e.g. M-101/Old/ for earlier edits) are skipped.
+  const files = (await readdir(join(source, id), { withFileTypes: true }))
+    .filter((e) => e.isFile() && !e.name.startsWith('.'))
+    .map((e) => e.name);
   const expected = angles.map((suffix) => `${id}${suffix}`);
   const absent = expected.filter((f) => !files.includes(f));
   const unexpected = files.filter((f) => !expected.includes(f));

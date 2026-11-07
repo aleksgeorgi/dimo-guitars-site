@@ -37,6 +37,8 @@ npm run photos -- --force # rewrite every photo, even unchanged ones
 
 The script only rewrites photos that changed, and the report lists missing angles, unexpected files and IDs that are in the CSV but have no folder. Commit the resized files in `src/assets/guitars/`, never the originals.
 
+To keep an earlier edit, move it into a subfolder such as `Photos/InventoryPhotos/<ID>/Old/`. The script skips subfolders, and a re-export must use the exact name above to be picked up.
+
 In `npm run dev`, a replaced photo can keep showing the old version until you clear the browser cache. The live site always serves the new one.
 
 ## Edit guitars: `src/data/inventory.csv`
