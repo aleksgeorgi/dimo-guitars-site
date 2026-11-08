@@ -131,3 +131,17 @@ const embed =
     opacity: 0.7;
   }
 </style>
+
+<script is:inline>
+  // EmailOctopus hides the form and shows its own one-line message. Add a prompt to
+  // confirm the signup, since the confirmation email can land in spam.
+  document.addEventListener('emailoctopus:form.success', () => {
+    const message = document.querySelector('.emailoctopus-success-message');
+    if (!message || message.querySelector('span')) return;
+    const hint = document.createElement('span');
+    hint.className = 'mt-1.5 block text-[14px] text-on-navy-soft';
+    hint.textContent =
+      'Please check your email to confirm your signup. If you don\u2019t see it, look in your spam folder and mark it \u201cNot spam\u201d.';
+    message.append(hint);
+  });
+</script>
