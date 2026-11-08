@@ -30,7 +30,7 @@ export const site = {
   name: 'Dimo Guitars',
   tagline: 'The Spirit of Tradition. The Art of Originality.',
   description:
-    'Handmade electric guitars shaped by the classical violin-making tradition, built one at a time by Dimo in his New York workshop.',
+    'Handmade electric guitars shaped by the traditions of classic guitar-making, with natural wood, pure form, and honest construction, built one at a time by Dimo, a fine artist turned luthier.',
   email: 'dimoguitarsnyc@gmail.com',
   // EmailOctopus landing page; used until the inline embed is pasted into Newsletter.astro.
   newsletterUrl: 'https://dimoguitars.eo.page/newsletter',
