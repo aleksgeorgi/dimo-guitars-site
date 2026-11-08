@@ -109,6 +109,14 @@ const embed =
   .newsletter-embed [data-form] .emailoctopus-error-message {
     color: #f3c6b4 !important;
   }
+  .newsletter-embed [data-confirm-hint] {
+    margin: 0 0 12px !important;
+    text-align: center !important;
+    font-family: inherit !important;
+    font-size: 15px !important;
+    line-height: 1.45 !important;
+    color: var(--on-navy) !important;
+  }
   .newsletter-embed [data-form] .text-center,
   .newsletter-embed [data-form] [eo-block='powered-by'],
   .newsletter-embed [data-form] [eo-block='powered-by'] .inner,
@@ -133,15 +141,15 @@ const embed =
 </style>
 
 <script is:inline>
-  // EmailOctopus hides the form and shows its own one-line message. Add a prompt to
-  // confirm the signup, since the confirmation email can land in spam.
+  // EmailOctopus replaces the message text right after this event, which would erase
+  // anything inside it. The prompt goes next to the message so it stays.
   document.addEventListener('emailoctopus:form.success', () => {
     const message = document.querySelector('.emailoctopus-success-message');
-    if (!message || message.querySelector('span')) return;
-    const hint = document.createElement('span');
-    hint.className = 'mt-1.5 block text-[14px] text-on-navy-soft';
+    if (!message || message.parentNode.querySelector('[data-confirm-hint]')) return;
+    const hint = document.createElement('p');
+    hint.setAttribute('data-confirm-hint', '');
     hint.textContent =
       'Please check your email to confirm your signup. If you don\u2019t see it, look in your spam folder and mark it \u201cNot spam\u201d.';
-    message.append(hint);
+    message.after(hint);
   });
 </script>
