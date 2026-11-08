@@ -3,7 +3,8 @@ import { site } from '../data/site';
 
 // Paste the EmailOctopus inline form embed here. The free plan allows one form,
 // so this component is rendered once per page, in the footer.
-const embed = '';
+const embed =
+  '<script async src="https://eomail6.com/form/d2d1fa9e-db89-11f1-82f5-4d18ff21024a.js" data-form="d2d1fa9e-db89-11f1-82f5-4d18ff21024a"></script>';
 ---
 
 <div class="flex min-w-0 flex-[1_1_380px] flex-col gap-4">
@@ -28,3 +29,101 @@ const embed = '';
     )
   }
 </div>
+
+<style is:global>
+  /* EmailOctopus injects its own styles; these override them to match the contact form. */
+  .newsletter-embed [eo-block='title'],
+  .newsletter-embed [eo-block='text'],
+  .newsletter-embed [eo-block='social-follow'] {
+    display: none !important;
+  }
+  .newsletter-embed [data-form].inline-container[eo-row],
+  .newsletter-embed .eo-form-wrapper,
+  .newsletter-embed .form-container {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    font-family: inherit !important;
+    color: var(--on-navy) !important;
+  }
+  .newsletter-embed .main-form {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: flex-start !important;
+    gap: 10px;
+    padding-top: 6px;
+  }
+  .newsletter-embed [eo-form-fields-container] {
+    flex: 1 1 240px;
+    min-width: 0;
+  }
+  .newsletter-embed [data-form] .emailoctopus-form-row,
+  .newsletter-embed .emailoctopus-form {
+    margin: 0 !important;
+  }
+  .newsletter-embed .form-control {
+    height: 44px !important;
+    border: 1px solid var(--on-navy) !important;
+    border-radius: 2px !important;
+    background: transparent !important;
+    color: var(--on-navy) !important;
+    font: inherit !important;
+    font-size: 15px !important;
+    padding: 0 16px !important;
+    box-shadow: none !important;
+  }
+  .newsletter-embed .form-control::placeholder {
+    color: var(--on-navy-muted) !important;
+  }
+  .newsletter-embed .form-control:focus {
+    outline: 2px solid var(--on-navy) !important;
+    outline-offset: 2px;
+  }
+  .newsletter-embed input[type='submit'] {
+    width: auto !important;
+    min-height: 44px;
+    margin: 0 !important;
+    padding: 0 24px !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    background: var(--on-navy) !important;
+    color: var(--ink) !important;
+    font: inherit !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    cursor: pointer;
+  }
+  .newsletter-embed input[type='submit']:hover {
+    opacity: 0.9;
+  }
+  .newsletter-embed .emailoctopus-success-message,
+  .newsletter-embed .emailoctopus-error-message {
+    margin: 0;
+    font-size: 15px;
+    color: var(--on-navy) !important;
+  }
+  .newsletter-embed [data-form] .text-center,
+  .newsletter-embed [data-form] [eo-block='powered-by'],
+  .newsletter-embed [data-form] [eo-block='powered-by'] .inner,
+  .newsletter-embed [data-form] [eo-block='powered-by'] p {
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+  }
+  .newsletter-embed [data-form] [eo-block='powered-by'] p,
+  .newsletter-embed [data-form] [eo-block='powered-by'] a {
+    margin-top: 12px !important;
+    font-family: inherit !important;
+    font-size: 12px !important;
+    color: var(--on-navy-muted) !important;
+  }
+  /* The badge is a purple SVG background; render it as a soft light tone on navy. */
+  .newsletter-embed [data-form] [eo-block='powered-by'] p {
+    background-position: left center !important;
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+  }
+</style>
