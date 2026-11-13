@@ -1,6 +1,6 @@
 # The Philosophy of Making Dimo Guitars
 
-*The Spirit of Tradition. The Art of Originality.*
+*Tradition, Innovation, and Originality.*
 
 Dimo Guitars combines sophisticated design with technical precision. Dimo was driven by the belief that the classic electric guitar, for all its greatness, could still be improved. He has spent three decades pursuing that improvement while staying true to the traditional, vintage way of building a guitar. Every instrument is crafted with well-considered proportions from carefully selected, instrument-grade woods (mahogany, ebony, figured maple, and others), chosen for what they bring to both the sound and the look. Hand-wound Dimo pickups, made in-house, deliver the tone and range to match. The emphasis on beauty comes directly from Dimo's background in fine arts, and the result is a guitar made to inspire.
 
