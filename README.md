@@ -66,7 +66,7 @@ When the Reverb shop opens, also update the "store coming soon" notes on `/store
 
 ## Text
 
-- About page: `content/copy/DGPhilosophy.md`. Keep its shape: a `#` title, an italic tagline, intro paragraphs, then four `##` sections (the three signatures and the closing).
+- About page: `content/copy/DGPhilosophy.md`. Keep its shape: a `#` title, an italic tagline and the general philosophy; then a `##` About section; then a `##` signature contributions section with an intro and three `###` items, each with an optional italic subtitle. The build fails with a clear message if the shape changes.
 - Copy rules: no em or en dashes; the location label is "NY, NY" ("New York" inside sentences).
 
 ## Mailing list and contact form

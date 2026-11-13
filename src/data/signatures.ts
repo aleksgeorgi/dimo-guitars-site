@@ -1,6 +1,7 @@
 import type { AngleKey } from '../lib/photos';
 
-// The three signature elements, in order. `anchor` is the section id on /about.
+// Dimo's three signature contributions, in order. `anchor` is the section id on /about.
+// Titles here are used on Home and on guitar pages; the About page takes its titles from DGPhilosophy.md.
 export const signatures = [
   {
     numeral: 'I.',
@@ -23,7 +24,7 @@ export const signatures = [
   {
     numeral: 'III.',
     anchor: 'headstock',
-    title: 'Sculpted Headstock',
+    title: 'Characteristic Headstock',
     short: 'The headstock',
     summary: "The crown of the instrument. A rounded silhouette with two ornamental openings and the maker's signature.",
     angle: 'headstock',

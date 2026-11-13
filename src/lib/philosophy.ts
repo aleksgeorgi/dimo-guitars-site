@@ -1,8 +1,11 @@
 import raw from '../../content/copy/DGPhilosophy.md?raw';
 
 // Splits DGPhilosophy.md into the pieces the About layout places separately.
-// Expected shape: "# Title", an italic tagline, intro paragraphs, then four "## " sections
-// (three signatures and the closing), each with an optional italic subtitle line.
+// Expected shape:
+//   "# Title", an italic tagline, then the general philosophy paragraphs
+//   "## " the About section (the maker's biography)
+//   "## " the signature contributions: intro paragraphs, then three "### " items,
+//         each with an optional italic subtitle line
 
 export type Section = { title: string; subtitle: string; paragraphs: string[] };
 
@@ -16,6 +19,7 @@ export function inline(s: string): string {
 }
 
 const italicLine = /^\*([^*].*[^*])\*$/;
+const file = 'content/copy/DGPhilosophy.md';
 
 function parse(md: string) {
   const blocks = md
@@ -26,13 +30,19 @@ function parse(md: string) {
 
   let title = '';
   const intro: Section = { title: '', subtitle: '', paragraphs: [] };
-  const sections: Section[] = [];
-  let current = intro;
+  const sections: (Section & { items: Section[] })[] = [];
+  let current: Section = intro;
 
   for (const block of blocks) {
-    if (block.startsWith('## ')) {
-      current = { title: block.slice(3).trim(), subtitle: '', paragraphs: [] };
-      sections.push(current);
+    if (block.startsWith('### ')) {
+      const parent = sections.at(-1);
+      if (!parent) throw new Error(`${file}: a "### " heading must come after a "## " heading.`);
+      current = { title: block.slice(4).trim(), subtitle: '', paragraphs: [] };
+      parent.items.push(current);
+    } else if (block.startsWith('## ')) {
+      const section = { title: block.slice(3).trim(), subtitle: '', paragraphs: [], items: [] };
+      sections.push(section);
+      current = section;
     } else if (block.startsWith('# ')) {
       title = block.slice(2).trim();
     } else if (italicLine.test(block) && !current.subtitle && current.paragraphs.length === 0) {
@@ -42,15 +52,10 @@ function parse(md: string) {
     }
   }
 
-  if (!title || sections.length !== 4) {
+  const [about, contributions] = sections;
+  if (!title || sections.length !== 2 || contributions.items.length !== 3) {
     throw new Error(
-      `content/copy/DGPhilosophy.md: expected a "# " title and 4 "## " sections (3 signatures + closing), found ${sections.length}.`,
-    );
-  }
-  const closing = sections[3];
-  if (closing.paragraphs.length < 6) {
-    throw new Error(
-      'content/copy/DGPhilosophy.md: the closing section needs an intro, three element lines, the aspiration and the final sentence.',
+      `${file}: expected a "# " title, then two "## " sections (About, then the signature contributions with three "### " items). Found ${sections.length} sections and ${contributions?.items.length ?? 0} items.`,
     );
   }
 
@@ -58,14 +63,8 @@ function parse(md: string) {
     title,
     tagline: intro.subtitle,
     intro: intro.paragraphs,
-    signatures: sections.slice(0, 3),
-    closing: {
-      title: closing.title,
-      intro: closing.paragraphs[0],
-      elements: closing.paragraphs.slice(1, 4),
-      aspiration: closing.paragraphs[4],
-      quote: closing.paragraphs[5],
-    },
+    about: { title: about.title, paragraphs: about.paragraphs },
+    contributions: { title: contributions.title, intro: contributions.paragraphs, items: contributions.items },
   };
 }
 
