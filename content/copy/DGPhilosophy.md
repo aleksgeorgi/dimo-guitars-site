@@ -2,17 +2,17 @@
 
 *The Spirit of Tradition. The Art of Originality.*
 
-The creation of a fine guitar begins with a philosophy: a belief that an instrument should embody more than its function. It should express the harmony of craftsmanship, engineering, natural beauty, and artistic individuality.
+Dimo Guitars combines sophisticated design with technical precision. Dimo was driven by the belief that the classic electric guitar, for all its greatness, could still be improved. He has spent three decades pursuing that improvement while staying true to the traditional, vintage way of building a guitar. Every instrument is crafted with well-considered proportions from carefully selected, instrument-grade woods (mahogany, ebony, figured maple, and others), chosen for what they bring to both the sound and the look. Hand-wound Dimo pickups, made in-house, deliver the tone and range to match. The emphasis on beauty comes directly from Dimo's background in fine arts, and the result is a guitar made to inspire.
 
-At **Dimo Guitars**, our philosophy is rooted in the timeless elegance of traditional stringed instruments, where every curve, every joint, and every detail serves a greater vision of balance and refinement.
+## About Dimo
 
-We draw particular inspiration from the classical violin-making tradition, where the beauty of natural wood, the purity of form, and the integrity of construction come together in an instrument of enduring character.
+Initially a fine artist trained in Europe and at New York's National Academy of Fine Arts, Dimo discovered his passion for guitar making in the 1990s. His eye for detail and dissatisfaction with mainstream guitar construction led him to innovate in design and build. He builds every instrument himself, by hand, without CNC or other programmable machines. In his New York workshop, he has developed specialized tools and jigs that bring precision to each guitar he crafts.
 
-Yet tradition, in our view, is not something merely to reproduce. It is a foundation upon which original ideas can flourish.
+## Dimo's Signature Contributions
 
-This philosophy finds its expression in three distinctive signature elements of our guitars.
+The Harmony of Tradition and Originality are represented in these three signature elements and are not isolated design features. Together, they are a unified approach to the art of guitar making.
 
-## Signature Asymmetric 22° Set-Neck Joint
+### Asymmetric 22° Set-Neck Joint
 
 *Original Engineering in the Spirit of Tradition*
 
@@ -26,7 +26,7 @@ The result is a carefully conceived construction that preserves the character of
 
 It is our belief that innovation should never exist merely for its own sake, but should become a natural part of thoughtful instrument making.
 
-## Signature Inset Carved Maple Top
+### Inset Carved Maple Top
 
 *The Natural Beauty of Wood, Uninterrupted*
 
@@ -42,7 +42,7 @@ This construction creates a harmonious visual relationship between the contrasti
 
 The result is a clean, sculptural, and refined appearance that recalls the purity of traditional violin making, where beauty is achieved through the form and craftsmanship of wood rather than the addition of unnecessary ornamentation.
 
-## Signature Sculpted Headstock
+### Characteristic Headstock
 
 *The Crown of the Instrument*
 
@@ -50,24 +50,8 @@ The headstock is more than the termination of the neck. It is the visual signatu
 
 Our distinctive headstock is defined by a gracefully sculpted silhouette, with a rounded crown, flowing contours, and two symmetrically positioned ornamental openings that lend the design its unmistakable character.
 
-The elegance of the dark wood, the classical appearance of the vintage-style tuning buttons, and the carefully incorporated maker's signature complete a composition of balance, individuality, and understated refinement.
+The elegance of the dark wood and the carefully incorporated maker's signature complete a composition of balance, individuality, and understated refinement.
 
 Its design is intentionally expressive without being excessive, reflecting our conviction that true elegance is achieved through proportion, restraint, and attention to detail.
 
 It is a distinctive crown for an instrument created to honor tradition while expressing its own identity.
-
-## A Harmony of Tradition and Originality
-
-These three signature elements are not isolated design features. Together, they represent a unified approach to the art of guitar making.
-
-The asymmetric neck joint expresses our pursuit of original engineering.
-
-The inset carved maple top reflects our appreciation for the natural beauty of wood and the sculptural traditions of fine instrument making.
-
-The distinctive headstock embodies the artistic individuality that gives every Dimo guitar its recognizable identity.
-
-Our aspiration is not simply to recreate the classic electric guitar, nor to abandon the traditions that made it timeless.
-
-It is to carry those traditions forward through thoughtful innovation, careful craftsmanship, and an enduring respect for the beauty of the instrument.
-
-**Dimo Guitars: The Spirit of Tradition. The Art of Originality.**
