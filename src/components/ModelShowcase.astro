@@ -1,0 +1,86 @@
+---
+// One model on /guitars: photos of its showcase guitar, the model name, an optional
+// description and the model-level specs. `stacked` puts the text under the photos
+// (used when two models share a row); otherwise photos and text sit side by side.
+import GuitarPhoto from './GuitarPhoto.astro';
+import type { Model } from '../data/models';
+import { countByModel } from '../lib/inventory';
+import { getPhoto } from '../lib/photos';
+
+type Props = { model: Model; stacked?: boolean; flip?: boolean; eager?: boolean };
+const { model, stacked = false, flip = false, eager = false } = Astro.props;
+
+const id = model.showcase;
+const front = getPhoto(id, 'front');
+const details = (['back', 'frontCrop', 'headstock'] as const).map((angle) => ({
+  ...getPhoto(id, angle),
+  aspect: '4 / 5',
+}));
+const count = countByModel(model.code);
+const titleId = `model-${model.slug}-title`;
+---
+
+<article
+  aria-labelledby={titleId}
+  class:list={[
+    'grid min-w-0 items-start gap-x-16 gap-y-9',
+    !stacked && 'lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]',
+  ]}>
+  <div class:list={['flex min-w-0 flex-col gap-3', !stacked && flip && 'lg:order-2']}>
+    <GuitarPhoto
+      photo={front}
+      sizes={stacked
+        ? '(min-width: 1240px) 560px, (min-width: 768px) 46vw, 100vw'
+        : '(min-width: 1240px) 610px, (min-width: 1024px) 50vw, 100vw'}
+      eager={eager}
+    />
+    <ul class="grid grid-cols-3 gap-3">
+      {
+        details.map((photo) => (
+          <li>
+            <GuitarPhoto photo={photo} sizes="(min-width: 1240px) 200px, (min-width: 1024px) 17vw, 33vw" />
+          </li>
+        ))
+      }
+    </ul>
+    <p class="text-[13px] text-muted">
+      Shown: <a href={`/store/${id.toLowerCase()}`} class="text-muted underline underline-offset-2">No. {id}</a>
+    </p>
+  </div>
+
+  <div class:list={['flex min-w-0 flex-col gap-7', !stacked && 'lg:sticky lg:top-8 lg:pt-4']}>
+    <h3 id={titleId} class="flex items-baseline gap-5">
+      <span class="font-serif text-[clamp(72px,9vw,120px)] leading-[0.9] font-normal" aria-hidden="true">
+        {model.code}
+      </span>
+      <span class="label">{model.fullName}</span>
+    </h3>
+
+    {model.description && <p class="max-w-[34em] text-[17px] text-walnut">{model.description}</p>}
+
+    <dl class="grid grid-cols-[minmax(110px,auto)_1fr] border-t border-rule text-[15px]">
+      {
+        model.specs.map((spec) => (
+          <>
+            <dt class="border-b border-rule py-3 pr-6 text-muted">{spec.label}</dt>
+            <dd class="border-b border-rule py-3">
+              {'href' in spec && spec.href ? (
+                <a href={spec.href} class="underline underline-offset-2">
+                  {spec.value}
+                </a>
+              ) : (
+                spec.value
+              )}
+            </dd>
+          </>
+        ))
+      }
+    </dl>
+
+    <div>
+      <a href={`/store?model=${model.code}`} class="btn btn-secondary">
+        See all {count} {model.fullName} guitars
+      </a>
+    </div>
+  </div>
+</article>
