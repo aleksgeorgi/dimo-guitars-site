@@ -1,5 +1,66 @@
 ---
-import ComingSoon from '../../components/ComingSoon.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ModelShowcase from '../../components/ModelShowcase.astro';
+import { families, getModel, models } from '../../data/models';
+import { site } from '../../data/site';
+import { getPhoto } from '../../lib/photos';
+
+const sections = families.map((f) => ({ ...f, models: f.models.map((code) => getModel(code)!) }));
+const ogImage = getPhoto(models[0].showcase, 'front').image?.src;
 ---
 
-<ComingSoon title="Guitars" />
+<BaseLayout
+  title={`Guitars | Handmade Electric Guitars | ${site.name}`}
+  description="The Dimo Guitars models: the D, the M, the R, and their predecessors the RC and the DH. Handmade electric guitars, each one of a kind."
+  ogImage={ogImage}>
+  <section class="container-site pt-[clamp(48px,6vw,80px)] pb-9">
+    <p class="label mb-2.5">The guitars</p>
+    <h1 class="mb-4 font-serif text-[clamp(44px,5vw,68px)] leading-[1.04] font-normal">The models</h1>
+    <p class="max-w-[36em] text-[17px] text-walnut">
+      Four families of handmade electric guitars. Within each one, every instrument is one of a kind.
+    </p>
+    <nav aria-label="Models" class="mt-8 flex flex-wrap gap-2.5 border-y border-rule py-[18px]">
+      {
+        sections.map((f) => (
+          <a
+            href={`#${f.anchor}`}
+            class="inline-flex min-h-[44px] items-center rounded-full border border-[#CFC7BB] px-[18px] text-[14px] font-medium text-ink no-underline transition-colors duration-200 hover:border-ink hover:text-ink">
+            {f.label}
+          </a>
+        ))
+      }
+    </nav>
+  </section>
+
+  {
+    sections.map((f, i) => (
+      <section id={f.anchor} class:list={['scroll-mt-4', i % 2 === 1 && 'bg-sawdust']}>
+        <div class="container-site py-[clamp(48px,6vw,96px)]">
+          {f.models.length === 1 ? (
+            <ModelShowcase model={f.models[0]} flip={i % 2 === 1} eager={i === 0} />
+          ) : (
+            <>
+              <div class="mb-12 max-w-[820px]">
+                <p class="label mb-2.5">Heritage</p>
+                <h2 class="heading mb-4">{f.title}</h2>
+                {f.intro && <p class="max-w-[36em] text-[17px] text-walnut">{f.intro}</p>}
+              </div>
+              <div class="grid gap-x-12 gap-y-16 md:grid-cols-2">
+                {f.models.map((m) => (
+                  <ModelShowcase model={m} stacked />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="border-t border-rule">
+    <div class="container-site flex flex-wrap justify-center gap-3.5 py-[clamp(48px,6vw,80px)]">
+      <a href="/store" class="btn btn-primary">Explore the collection</a>
+      <a href="/about" class="btn btn-secondary">Our philosophy</a>
+    </div>
+  </section>
+</BaseLayout>

@@ -60,7 +60,7 @@ When the Reverb shop opens, also update the "store coming soon" notes on `/store
 
 ## Show a hidden page: `src/data/site.ts`
 
-`pages` controls the nav. Set `show: true` to put a page in the header and footer, include it in the sitemap and drop its `noindex`. Hidden pages (Guitars, Workshop & Tools, Jigs & Templates, Contact) still build as "Coming soon" placeholders, but nothing links to them.
+`pages` controls the nav. Set `show: true` to put a page in the header and footer, include it in the sitemap and drop its `noindex`. Hidden pages (Workshop & Tools, Jigs & Templates, Contact) still build as "Coming soon" placeholders, but nothing links to them.
 
 `site.ts` also holds the contact email, the location label, the guitar whose photos illustrate the signatures on Home and About (`aboutGuitarId`), and social links (each one appears once its URL is filled in).
 
@@ -68,6 +68,16 @@ When the Reverb shop opens, also update the "store coming soon" notes on `/store
 
 - About page: `content/copy/DGPhilosophy.md`. Keep its shape: a `#` title, an italic tagline and the general philosophy; then a `##` About section; then a `##` signature contributions section with an intro and three `###` items, each with an optional italic subtitle. The build fails with a clear message if the shape changes.
 - Copy rules: no em or en dashes; the location label is "NY, NY" ("New York" inside sentences).
+
+## Guitars page: `src/data/models.ts`
+
+The Guitars page (`/guitars`) is built from `src/data/models.ts`. For each model:
+
+- `showcase` is the guitar whose photos represent the model.
+- `description` is empty for now. Fill it in and it appears under the model name.
+- `specs` are the model-level facts (neck joint, headstock, body, pickups). An `href` links a spec to its section on the About page.
+
+`families` in the same file controls how models are grouped on the page (RC and DH share the Heritage section).
 
 ## Mailing list and contact form
 

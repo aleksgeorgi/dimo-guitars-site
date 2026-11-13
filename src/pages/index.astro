@@ -86,8 +86,13 @@ const sectionPad = 'container-site pt-[clamp(64px,8vw,112px)] pb-10';
     id="models"
     class="container-site scroll-mt-4 pt-[clamp(64px,8vw,112px)] pb-[clamp(64px,8vw,112px)]"
     aria-labelledby="models-title">
-    <p class="label mb-2">The models</p>
-    <h2 id="models-title" class="heading mb-10">Five designs, each one of a kind</h2>
+    <div class="mb-10 flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <p class="label mb-2">The models</p>
+        <h2 id="models-title" class="heading">Five designs, each one of a kind</h2>
+      </div>
+      <a href="/guitars" class="text-link">About the models →</a>
+    </div>
     <ul class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] border-t border-rule">
       {
         models.map((m) => (

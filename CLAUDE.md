@@ -39,7 +39,7 @@ Brand and catalog site for **Dimo Guitars**: handmade electric guitars built by 
 - Footer social icons: Instagram and YouTube accounts exist; enable icons once Aleks provides the URLs.
 - Video: there's a lot of raw workshop footage. Planned: a background or promo video on the site, plus Shorts/Reels. If adding video, keep Lighthouse mobile performance at 90 or above (poster image, compressed self-hosted file or a lightweight YouTube embed, no autoplay with sound) and respect `prefers-reduced-motion`.
 - Reverb sync at build time (pull price and status).
-- Hidden pages to build out: Guitars/models, Workshop & Tools, Jigs & Templates, Contact (possibly Pickups).
+- Hidden pages to build out: Workshop & Tools, Jigs & Templates, Contact (possibly Pickups). The Guitars page is live; its model descriptions are still empty in `src/data/models.ts`.
 - Model descriptions (currently "Description coming soon") and per-guitar specs in `inventory.csv`.
 
 ## Working with Aleks

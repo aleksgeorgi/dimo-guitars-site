@@ -5,7 +5,7 @@ export type Page = { label: string; href: string; show: boolean };
 export const pages: Page[] = [
   { label: 'Home', href: '/', show: true },
   { label: 'About', href: '/about', show: true },
-  { label: 'Guitars', href: '/guitars', show: false },
+  { label: 'Guitars', href: '/guitars', show: true },
   { label: 'Workshop & Tools', href: '/workshop', show: false },
   { label: 'Jigs & Templates', href: '/jigs', show: false },
   { label: 'Contact', href: '/contact', show: false },
