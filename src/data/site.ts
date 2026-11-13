@@ -28,9 +28,9 @@ export function isHiddenPath(pathname: string): boolean {
 
 export const site = {
   name: 'Dimo Guitars',
-  tagline: 'The Spirit of Tradition. The Art of Originality.',
+  tagline: 'Tradition, Innovation, and Originality.',
   description:
-    'Handmade electric guitars shaped by the traditions of classic guitar-making, with natural wood, pure form, and honest construction, built one at a time by Dimo, a fine artist turned luthier.',
+    'Electric guitars, handmade one at a time by Dimo, a fine artist turned luthier.',
   email: 'dimoguitarsnyc@gmail.com',
   // EmailOctopus landing page; used until the inline embed is pasted into Newsletter.astro.
   newsletterUrl: 'https://dimoguitars.eo.page/newsletter',
