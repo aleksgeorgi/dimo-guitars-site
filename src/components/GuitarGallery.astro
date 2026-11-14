@@ -1,5 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
+import Lightbox from './Lightbox.astro';
 import { widthsFor, type Photo } from '../lib/photos';
 
 type Props = { photos: Photo[]; name: string };
@@ -17,6 +18,7 @@ const fill = 'absolute inset-0 h-full w-full object-contain';
       <button
         type="button"
         data-lightbox-open="0"
+        data-lightbox-group="gallery"
         aria-label={`Enlarge photo: ${main.label}`}
         class="group relative block max-h-[860px] w-full cursor-zoom-in overflow-hidden bg-photo"
         style={`aspect-ratio: ${main.aspect}`}>
@@ -48,6 +50,7 @@ const fill = 'absolute inset-0 h-full w-full object-contain';
             <button
               type="button"
               data-lightbox-open={slideIndex(p)}
+              data-lightbox-group="gallery"
               aria-label={`View larger: ${p.label}`}
               class:list={[
                 'relative block w-full cursor-zoom-in overflow-hidden bg-photo',
@@ -74,191 +77,4 @@ const fill = 'absolute inset-0 h-full w-full object-contain';
   </ul>
 </div>
 
-{
-  viewable.length > 0 && (
-    <dialog
-      data-lightbox
-      aria-label={`${name} photos`}
-      class="lightbox fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none flex-col bg-photo p-0 text-ink open:flex">
-      <div class="flex items-center justify-between gap-4 px-[clamp(16px,3vw,32px)] py-3">
-        <p class="text-[13px] text-muted" aria-live="polite">
-          <span data-lightbox-counter>1 / {viewable.length}</span>
-          <span class="mx-1.5" aria-hidden="true">·</span>
-          <span data-lightbox-caption>{viewable[0].label}</span>
-          <span class="ml-3 hidden sm:inline" data-lightbox-hint>Click the photo to zoom</span>
-        </p>
-        <button
-          type="button"
-          data-lightbox-close
-          autofocus
-          class="-mr-2 inline-flex h-11 w-11 cursor-pointer items-center justify-center">
-          <span class="sr-only">Close</span>
-          <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M5 5l14 14M19 5L5 19" />
-          </svg>
-        </button>
-      </div>
-
-      <div class="relative min-h-0 flex-1" data-lightbox-stage>
-        {viewable.map((p, i) => (
-          <figure
-            data-lightbox-slide
-            data-label={p.label}
-            hidden={i !== 0}
-            class="absolute inset-0 m-0 overflow-hidden px-[clamp(8px,6vw,88px)] pb-6">
-            <Picture
-              src={p.image!}
-              alt={p.alt}
-              widths={widthsFor(p.image!, [800, 1200, 1600])}
-              sizes="100vw"
-              formats={['avif']}
-              fallbackFormat="webp"
-              loading="lazy"
-              pictureAttributes={{ class: 'block h-full w-full' }}
-              class="h-full w-full cursor-zoom-in object-contain transition-transform duration-200 ease-out"
-            />
-          </figure>
-        ))}
-
-        {viewable.length > 1 && (
-          <>
-            <button
-              type="button"
-              data-lightbox-prev
-              class="absolute top-1/2 left-1 inline-flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center sm:left-4">
-              <span class="sr-only">Previous photo</span>
-              <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
-                <path d="M15 4l-8 8 8 8" />
-              </svg>
-            </button>
-            <button
-              type="button"
-              data-lightbox-next
-              class="absolute top-1/2 right-1 inline-flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center sm:right-4">
-              <span class="sr-only">Next photo</span>
-              <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
-                <path d="M9 4l8 8-8 8" />
-              </svg>
-            </button>
-          </>
-        )}
-      </div>
-    </dialog>
-  )
-}
-
-<style>
-  .lightbox[open] {
-    animation: lightbox-fade 200ms ease-out;
-  }
-
-  .lightbox::backdrop {
-    background: transparent;
-  }
-
-  @keyframes lightbox-fade {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-</style>
-
-<script>
-  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]');
-
-  if (dialog) {
-    const slides = [...dialog.querySelectorAll<HTMLElement>('[data-lightbox-slide]')];
-    const counter = dialog.querySelector<HTMLElement>('[data-lightbox-counter]')!;
-    const caption = dialog.querySelector<HTMLElement>('[data-lightbox-caption]')!;
-    const stage = dialog.querySelector<HTMLElement>('[data-lightbox-stage]')!;
-    const hint = dialog.querySelector<HTMLElement>('[data-lightbox-hint]')!;
-    const ZOOM = 2.5;
-    let index = 0;
-    let zoomed = false;
-
-    const imgOf = (slide: HTMLElement) => slide.querySelector('img')!;
-
-    // Measured against the unscaled layout box, so the origin doesn't drift while zoomed.
-    const aim = (slide: HTMLElement, x: number, y: number) => {
-      const img = imgOf(slide);
-      const box = slide.getBoundingClientRect();
-      const px = ((x - box.left - img.offsetLeft) / img.offsetWidth) * 100;
-      const py = ((y - box.top - img.offsetTop) / img.offsetHeight) * 100;
-      const clamp = (v: number) => Math.min(100, Math.max(0, v));
-      img.style.transformOrigin = `${clamp(px)}% ${clamp(py)}%`;
-    };
-
-    const setZoom = (on: boolean, x?: number, y?: number) => {
-      const slide = slides[index];
-      const img = imgOf(slide);
-      zoomed = on;
-      if (on && x !== undefined && y !== undefined) aim(slide, x, y);
-      img.style.transform = on ? `scale(${ZOOM})` : '';
-      img.classList.toggle('cursor-zoom-in', !on);
-      img.classList.toggle('cursor-zoom-out', on);
-      stage.style.touchAction = on ? 'none' : '';
-      hint.textContent = on ? 'Move to look around · click to zoom out' : 'Click the photo to zoom';
-    };
-
-    slides.forEach((slide) => {
-      const img = imgOf(slide);
-      img.addEventListener('click', (e) => setZoom(!zoomed, e.clientX, e.clientY));
-      slide.addEventListener('pointermove', (e) => {
-        if (zoomed) aim(slide, e.clientX, e.clientY);
-      });
-    });
-
-    const show = (i: number) => {
-      if (zoomed) setZoom(false);
-      index = (i + slides.length) % slides.length;
-      slides.forEach((slide, j) => (slide.hidden = j !== index));
-      counter.textContent = `${index + 1} / ${slides.length}`;
-      caption.textContent = slides[index].dataset.label ?? '';
-    };
-
-    document.querySelectorAll<HTMLButtonElement>('[data-lightbox-open]').forEach((button) => {
-      button.addEventListener('click', () => {
-        show(Number(button.dataset.lightboxOpen));
-        dialog.showModal();
-        document.documentElement.style.overflow = 'hidden';
-      });
-    });
-
-    dialog.addEventListener('close', () => {
-      if (zoomed) setZoom(false);
-      document.documentElement.style.overflow = '';
-    });
-
-    dialog.querySelector('[data-lightbox-close]')?.addEventListener('click', () => dialog.close());
-    dialog.querySelector('[data-lightbox-prev]')?.addEventListener('click', () => show(index - 1));
-    dialog.querySelector('[data-lightbox-next]')?.addEventListener('click', () => show(index + 1));
-
-    dialog.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') show(index - 1);
-      else if (e.key === 'ArrowRight') show(index + 1);
-      else if (e.key === 'Escape') dialog.close();
-      else return;
-      e.preventDefault();
-    });
-
-    let startX = 0;
-    let startY = 0;
-    stage.addEventListener(
-      'touchstart',
-      (e) => {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-      },
-      { passive: true },
-    );
-    stage.addEventListener('touchend', (e) => {
-      if (zoomed) return;
-      const dx = e.changedTouches[0].clientX - startX;
-      const dy = e.changedTouches[0].clientY - startY;
-      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) show(index + (dx < 0 ? 1 : -1));
-    });
-  }
-</script>
+<Lightbox photos={photos} name={name} group="gallery" />
