@@ -56,7 +56,7 @@ One row per guitar. No commas inside fields.
 | `finish` … `pickups` | Optional specs. Filled ones appear in "The instrument" table. |
 | `notes` | Optional description for the guitar page. |
 
-The "Signature features" list on a guitar page comes from `src/data/signatures.ts`, not the CSV: `byModel` says which features each model has, and `byGuitar` lists the individual guitars that differ. A guitar with none shows no list.
+The "Signature features" list on a guitar page comes from `src/data/signatures.ts`, not the CSV: `byModel` says which features each model has, and `byGuitar` lists the individual guitars that differ.
 
 When the Reverb shop opens, also update the "store coming soon" notes on `/store` (`src/pages/store/index.astro`) and on guitar pages (`src/pages/store/[id].astro`).
 
