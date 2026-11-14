@@ -34,7 +34,11 @@ const year = new Date().getFullYear();
               {social.map((s, i) => (
                 <>
                   {i > 0 && ' · '}
-                  <a href={s.href} class="text-on-navy no-underline hover:text-on-navy hover:underline" rel="noopener">
+                  <a
+                    href={s.href}
+                    class="text-on-navy no-underline hover:text-on-navy hover:underline"
+                    target="_blank"
+                    rel="noopener">
                     {s.label}
                   </a>
                 </>

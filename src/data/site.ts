@@ -39,8 +39,8 @@ export const site = {
   aboutGuitarId: 'D-105',
   // Social links render only once a URL is set.
   social: [
-    { label: 'Instagram', href: '' },
-    { label: 'YouTube', href: '' },
-    { label: 'Facebook', href: '' },
+    { label: 'Instagram', href: 'https://www.instagram.com/dimoguitars/' },
+    { label: 'YouTube', href: 'https://www.youtube.com/@DimoGuitars' },
+    { label: 'Facebook', href: 'https://www.facebook.com/dimoguitars/' },
   ],
 };
