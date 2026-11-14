@@ -36,7 +36,7 @@ Brand and catalog site for **Dimo Guitars**: handmade electric guitars built by 
 - Policy pages still needed before Reverb launches: return/refund, shipping and insurance, terms of sale. They must match the Reverb shop's policies, which aren't written yet. Don't invent policy terms; scaffold pages with clear `TODO` placeholders if asked. `/privacy` exists and is marked `TODO: review`.
 
 ## Later (don't start unless Aleks asks)
-- Footer social icons: Instagram and YouTube accounts exist; enable icons once Aleks provides the URLs.
+- Footer social links (Instagram, YouTube, Facebook) are live as text links, set in `src/data/site.ts`. Icons instead of text are a possible later change.
 - Video: there's a lot of raw workshop footage. Planned: a background or promo video on the site, plus Shorts/Reels. If adding video, keep Lighthouse mobile performance at 90 or above (poster image, compressed self-hosted file or a lightweight YouTube embed, no autoplay with sound) and respect `prefers-reduced-motion`.
 - Reverb sync at build time (pull price and status).
 - Hidden pages to build out: Workshop & Tools, Jigs & Templates, Contact (possibly Pickups). The Guitars page is live; its model descriptions are still empty in `src/data/models.ts`.
