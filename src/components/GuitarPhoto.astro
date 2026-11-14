@@ -7,12 +7,27 @@ type Props = {
   sizes: string;
   eager?: boolean;
   class?: string;
+  // When set, the photo is a button that opens this group's <Lightbox> at this photo.
+  lightbox?: { group: string; index: number };
 };
 
-const { photo, sizes, eager = false, class: className } = Astro.props;
+const { photo, sizes, eager = false, class: className, lightbox } = Astro.props;
+const zoomable = lightbox && photo.image;
+const Tag = zoomable ? 'button' : 'div';
+const attrs = zoomable
+  ? {
+      type: 'button',
+      'data-lightbox-open': lightbox.index,
+      'data-lightbox-group': lightbox.group,
+      'aria-label': `View larger: ${photo.label}`,
+    }
+  : {};
 ---
 
-<div class:list={['relative overflow-hidden bg-photo', className]} style={`aspect-ratio: ${photo.aspect}`}>
+<Tag
+  {...attrs}
+  class:list={['relative block w-full overflow-hidden bg-photo', zoomable && 'cursor-zoom-in', className]}
+  style={`aspect-ratio: ${photo.aspect}`}>
   {
     photo.image && (
       <Picture
@@ -28,4 +43,4 @@ const { photo, sizes, eager = false, class: className } = Astro.props;
       />
     )
   }
-</div>
+</Tag>

@@ -3,19 +3,23 @@
 // description and the model-level specs. `stacked` puts the text under the photos
 // (used when two models share a row); otherwise photos and text sit side by side.
 import GuitarPhoto from './GuitarPhoto.astro';
+import Lightbox from './Lightbox.astro';
 import type { Model } from '../data/models';
 import { countByModel } from '../lib/inventory';
-import { getPhoto } from '../lib/photos';
+import { getPhotos } from '../lib/photos';
 
 type Props = { model: Model; stacked?: boolean; flip?: boolean; eager?: boolean };
 const { model, stacked = false, flip = false, eager = false } = Astro.props;
 
 const id = model.showcase;
-const front = getPhoto(id, 'front');
-const details = (['back', 'frontCrop', 'headstock'] as const).map((angle) => ({
-  ...getPhoto(id, angle),
-  aspect: '4 / 5',
-}));
+// Clicking a photo opens a viewer with all of this guitar's photos, starting at that one.
+const all = getPhotos(id).filter((p) => p.image);
+const pick = (angle: string) => {
+  const index = all.findIndex((p) => p.angle === angle);
+  return { photo: all[index], lightbox: { group: model.slug, index } };
+};
+const front = pick('front');
+const details = ['back', 'frontCrop', 'headstock'].map(pick).filter((d) => d.photo);
 const count = countByModel(model.code);
 const titleId = `model-${model.slug}-title`;
 ---
@@ -29,7 +33,8 @@ const titleId = `model-${model.slug}-title`;
   ]}>
   <div class:list={['flex min-w-0 flex-col gap-3', !stacked && flip && 'lg:order-2']}>
     <GuitarPhoto
-      photo={front}
+      photo={front.photo}
+      lightbox={front.lightbox}
       sizes={stacked
         ? '(min-width: 1240px) 560px, (min-width: 768px) 46vw, 100vw'
         : '(min-width: 1240px) 610px, (min-width: 1024px) 50vw, 100vw'}
@@ -37,9 +42,13 @@ const titleId = `model-${model.slug}-title`;
     />
     <ul class="grid grid-cols-3 gap-3">
       {
-        details.map((photo) => (
+        details.map((d) => (
           <li>
-            <GuitarPhoto photo={photo} sizes="(min-width: 1240px) 200px, (min-width: 1024px) 17vw, 33vw" />
+            <GuitarPhoto
+              photo={{ ...d.photo, aspect: '4 / 5' }}
+              lightbox={d.lightbox}
+              sizes="(min-width: 1240px) 200px, (min-width: 1024px) 17vw, 33vw"
+            />
           </li>
         ))
       }
@@ -85,3 +94,5 @@ const titleId = `model-${model.slug}-title`;
     </div>
   </div>
 </article>
+
+<Lightbox photos={all} name={`${model.fullName}, No. ${id}`} group={model.slug} />
