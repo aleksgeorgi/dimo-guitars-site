@@ -30,3 +30,30 @@ export const signatures = [
     angle: 'headstock',
   },
 ] as const satisfies readonly { angle: AngleKey; [key: string]: string }[];
+
+type Anchor = (typeof signatures)[number]['anchor'];
+
+// Which signature contributions each model has, as confirmed by Dimo (Nov 2026).
+// The headstock contribution describes the D headstock, which the DH shares.
+const byModel: Record<string, readonly Anchor[]> = {
+  D: ['neck-joint', 'maple-top', 'headstock'],
+  M: ['neck-joint'],
+  R: ['neck-joint'],
+  RC: [],
+  DH: ['headstock'],
+};
+
+// Individual guitars that differ from their model. A listed guitar gets exactly these.
+const byGuitar: Record<string, readonly Anchor[]> = {
+  // Traditional set-neck joint instead of the asymmetric one.
+  'M-102': [],
+  'M-106': [],
+  'M-108': [],
+  // Has the R headstock.
+  'DH-005': [],
+};
+
+export function signaturesFor(guitarId: string, modelCode: string) {
+  const anchors = byGuitar[guitarId] ?? byModel[modelCode] ?? [];
+  return signatures.filter((s) => anchors.includes(s.anchor));
+}
