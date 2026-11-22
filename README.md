@@ -65,7 +65,7 @@ Not in the CSV, because they are the same on every guitar: 22 frets, the scale l
 
 The neck joint is not in the CSV either. It follows the same rules as the signature features below.
 
-The Guitars page picks up these specs by itself: under each model it lists whatever every guitar of that model has in common (wood grades such as AAAA are ignored for this).
+The Guitars page picks up these specs by itself. Under each model it lists what every guitar of that model has in common, and where a spec takes two to four different values it shows the range, most common first ("Santos rosewood or ebony"). Wood grades such as AAAA are ignored for this. The short line under each name in the strip at the top of the page is built the same way.
 
 The "Signature features" list on a guitar page comes from `src/data/signatures.ts`, not the CSV: `byModel` says which features each model has, and `byGuitar` lists the individual guitars that differ.
 

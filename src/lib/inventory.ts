@@ -174,20 +174,49 @@ export function moreFromModel(guitar: Guitar, limit = 4): Guitar[] {
   return [...same.slice(i + 1), ...same.slice(0, i)].slice(0, limit);
 }
 
-// Specs that every guitar of a model shares, for the Guitars page. Wood grades (AAA, AAAA)
-// are ignored when comparing, so "Carved figured maple" counts as shared. Rows that are the
-// same for every Dimo guitar are left out; the page lists those once.
+// Model-level specs for the Guitars page, worked out from the guitars of that model.
+// A spec every guitar shares is shown as is. A spec that takes two to four different values
+// is shown as a range ("Ebony or Santos rosewood"), most common first. A spec with more
+// variety than that, or one that only some guitars have, is left out. Wood grades (AAA, AAAA)
+// are ignored when comparing. Rows that are the same for every Dimo guitar are left out too;
+// the page lists those once.
 const everyGuitar = new Set(['Frets', 'Scale length', 'Fretboard radius', 'Headplate', 'Pickups', 'Switching', 'Neck joint']);
 const withoutGrade = (value: string) => value.replace(/\s+A{3,5}$/, '');
+const maxRange = 4;
+
+// Tuners differ guitar by guitar, so a range of them says little about the model.
+const noRange = new Set(['Tuners']);
+
+// "Chambered sapele, sapele or mahogany": later items start lower-case unless they are a name.
+const names = /^(Honduran|Santos|Claro|Gotoh|Kluson|Grover|Wilkinson|Schaller|Nashville|Guyker|ABM|ABR)\b/;
+function orList(values: string[]): string {
+  const items = values.map((v, i) => (i === 0 || names.test(v) ? v : v.charAt(0).toLowerCase() + v.slice(1)));
+  return items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} or ${items.at(-1)}`;
+}
 
 export function commonSpecs(code: string): SpecRow[] {
   const group = guitars.filter((g) => g.model.code === code);
   if (group.length === 0) return [];
   const rowsOf = (g: Guitar) => g.specGroups.flatMap((sg) => sg.rows);
-  return rowsOf(group[0])
-    .filter((row) => !everyGuitar.has(row.label))
-    .map((row) => ({ label: row.label, value: withoutGrade(row.value) }))
-    .filter((row) =>
-      group.every((g) => rowsOf(g).some((r) => r.label === row.label && withoutGrade(r.value) === row.value)),
-    );
+  const labels = rowsOf(group[0])
+    .map((row) => row.label)
+    .filter((label) => !everyGuitar.has(label));
+
+  return labels.flatMap((label) => {
+    const values = group.map((g) => rowsOf(g).find((r) => r.label === label)?.value);
+    if (values.some((v) => !v)) return [];
+
+    // Distinct values, most common first.
+    const counts = new Map<string, number>();
+    for (const v of values) counts.set(withoutGrade(v!), (counts.get(withoutGrade(v!)) ?? 0) + 1);
+    const distinct = [...counts].sort((a, b) => b[1] - a[1]).map(([v]) => v);
+    if (distinct.length > maxRange || (distinct.length > 1 && noRange.has(label))) return [];
+
+    if (label === 'Controls' && distinct.length > 1) {
+      const kinds = switches.filter((kind) => distinct.includes(sharedSpecs.controls(kind)));
+      kinds.sort((a, b) => counts.get(sharedSpecs.controls(b))! - counts.get(sharedSpecs.controls(a))!);
+      return [{ label, value: sharedSpecs.controls(orList(kinds)) }];
+    }
+    return [{ label, value: orList(distinct) }];
+  });
 }
