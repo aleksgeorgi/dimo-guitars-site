@@ -46,9 +46,9 @@ const features = signaturesFor(id, model.code).map((s) => ({ label: s.title, hre
   ogImage={photos[0].image?.src}>
   <nav aria-label="Breadcrumb" class="container-site pt-[22px] text-[13px] text-muted">
     <ol class="flex flex-wrap gap-1.5">
-      <li><a href="/store" class="text-muted underline underline-offset-2">Store</a> <span aria-hidden="true">/</span></li>
+      <li><a href="/store" class="tap text-muted underline underline-offset-2">Store</a> <span aria-hidden="true">/</span></li>
       <li>
-        <a href={modelHref} class="text-muted underline underline-offset-2">{model.fullName}</a>{' '}
+        <a href={modelHref} class="tap text-muted underline underline-offset-2">{model.fullName}</a>{' '}
         <span aria-hidden="true">/</span>
       </li>
       <li aria-current="page">{id}</li>
@@ -145,7 +145,7 @@ const features = signaturesFor(id, model.code).map((s) => ({ label: s.title, hre
                           ))}
                         </ol>
                       ) : row.href ? (
-                        <a href={row.href} class="underline underline-offset-2">
+                        <a href={row.href} class="tap underline underline-offset-2">
                           {row.value}
                         </a>
                       ) : (
@@ -169,11 +169,11 @@ const features = signaturesFor(id, model.code).map((s) => ({ label: s.title, hre
         features.length > 0 && (
         <div>
           <h2 class="mb-2.5 font-serif text-[26px] font-medium">Signature features</h2>
-          <ul class="flex flex-col gap-2 text-[15px]">
+          <ul class="flex flex-col text-[15px] md:gap-2">
             {
               features.map((f) => (
                 <li>
-                  <a href={f.href} class="underline underline-offset-2">
+                  <a href={f.href} class="inline-block py-3 underline underline-offset-2 md:py-0">
                     {f.label} →
                   </a>
                 </li>

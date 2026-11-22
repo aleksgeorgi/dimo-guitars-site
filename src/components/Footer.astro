@@ -22,22 +22,24 @@ const year = new Date().getFullYear();
     <Newsletter />
 
     <div class="flex flex-wrap gap-12 text-[14px]">
-      <div class="flex flex-col gap-2.5">
-        <span class="text-[11px] uppercase tracking-[0.2em] text-on-navy-muted">Explore</span>
+      <div class="flex flex-col md:gap-2.5">
+        <span class="mb-1 text-[11px] uppercase tracking-[0.2em] text-on-navy-muted md:mb-0">Explore</span>
         {
           navPages.map((p) => (
-            <a href={p.href} class="text-on-navy no-underline hover:text-on-navy hover:underline">
+            <a href={p.href} class="py-[11px] text-on-navy no-underline hover:text-on-navy hover:underline md:py-0">
               {p.label}
             </a>
           ))
         }
       </div>
-      <div class="flex flex-col gap-2.5">
-        <span class="text-[11px] uppercase tracking-[0.2em] text-on-navy-muted">Contact</span>
-        <a href={`mailto:${site.email}`} class="text-on-navy no-underline hover:text-on-navy hover:underline">
+      <div class="flex flex-col md:gap-2.5">
+        <span class="mb-1 text-[11px] uppercase tracking-[0.2em] text-on-navy-muted md:mb-0">Contact</span>
+        <a
+          href={`mailto:${site.email}`}
+          class="py-[11px] text-on-navy no-underline hover:text-on-navy hover:underline md:py-0">
           {site.email}
         </a>
-        <span>{site.location}</span>
+        <span class="py-[11px] md:py-0">{site.location}</span>
         {
           social.length > 0 && (
             <ul class="-ml-2.5 flex">
@@ -81,6 +83,6 @@ const year = new Date().getFullYear();
   <div
     class="container-site flex flex-wrap justify-between gap-3 border-t border-on-navy/20 pt-5 pb-8 text-[13px] text-on-navy-muted">
     <span>© {year} {site.name} · {site.tagline}</span>
-    <a href="/privacy" class="text-on-navy-muted hover:text-on-navy">Privacy</a>
+    <a href="/privacy" class="tap text-on-navy-muted hover:text-on-navy">Privacy</a>
   </div>
 </footer>

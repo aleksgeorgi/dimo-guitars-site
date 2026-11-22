@@ -19,8 +19,9 @@ const sectionPad = 'container-site pt-[clamp(64px,8vw,112px)] pb-10';
 ---
 
 <BaseLayout ogImage={hero.image?.src}>
-  <section class="container-site flex flex-wrap items-center gap-14 py-[clamp(48px,7vw,96px)]">
-    <div class="flex min-w-0 flex-[1_1_420px] flex-col gap-6">
+  <section class="container-site flex flex-wrap items-center gap-8 pt-6 pb-12 lg:gap-14 lg:py-[clamp(48px,7vw,96px)]">
+    {/* On phones and tablets the photo comes first, so a guitar is on the first screen. */}
+    <div class="order-2 flex min-w-0 flex-[1_1_420px] flex-col gap-6 lg:order-1">
       <p class="label">Handmade electric guitars · <span class="whitespace-nowrap">{site.location}</span></p>
       <h1 class="display">{site.tagline}</h1>
       <p class="lead max-w-[34em]">{site.description}</p>
@@ -29,7 +30,7 @@ const sectionPad = 'container-site pt-[clamp(64px,8vw,112px)] pb-10';
         <a href="/about" class="btn btn-secondary min-h-[50px]">Our philosophy</a>
       </div>
     </div>
-    <div class="min-w-0 flex-[1_1_520px]">
+    <div class="order-1 min-w-0 flex-[1_1_520px] lg:order-2">
       <GuitarPhoto photo={hero} sizes="(min-width: 1240px) 620px, (min-width: 1000px) 50vw, 100vw" eager />
     </div>
   </section>
