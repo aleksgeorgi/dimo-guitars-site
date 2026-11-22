@@ -52,7 +52,7 @@ One row per guitar. No commas inside fields.
 | `status` | `available`, `sold`, `hold` or `not-for-sale` |
 | `price` | Whole USD with no symbols, e.g. `4000`. Blank shows "Price on request". Sold guitars show "Sold". |
 | `reverb_url` | Blank for now. When set on an available guitar, its page shows "Buy on Reverb" in place of "Join the mailing list". |
-| `featured` | `true` for up to four guitars shown on the Home page. The first one also supplies the Home hero photo. |
+| `featured` | `true` for up to four guitars shown under "Featured instruments" at the bottom of the About page. The first one also supplies the Home hero photo. |
 | `body_wood`, `back_wood`, `top_wood` | Woods of the body, a separate back cap if there is one, and the top. Blank if the guitar has none. |
 | `body_finish`, `neck_finish` | Finishes, e.g. `High gloss nitro`, `Poly`. |
 | `neck_wood`, `fretboard` | Neck and fretboard woods. |
