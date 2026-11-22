@@ -4,7 +4,7 @@ import GuitarPhoto from '../../components/GuitarPhoto.astro';
 import ModelShowcase from '../../components/ModelShowcase.astro';
 import { families, getModel, models } from '../../data/models';
 import { site } from '../../data/site';
-import { commonSpecs, sharedSpecs } from '../../lib/inventory';
+import { modelSummary, sharedSpecs } from '../../lib/inventory';
 import { getPhoto } from '../../lib/photos';
 
 const sections = families.map((f) => ({ ...f, models: f.models.map((code) => getModel(code)!) }));
@@ -22,31 +22,10 @@ const everyGuitar = [
 
 // The strip at the top: one body shot per model, linking down to its section.
 const heritage = new Set(families.filter((f) => f.models.length > 1).flatMap((f) => f.models as readonly string[]));
-// The line under each name: up to three facts, e.g. "Single cut, carved figured maple top, high gloss nitro finish".
-// Only specs the whole model shares are used, never a range.
-const lower = (v: string) => (/^(Honduran|Santos|Claro)\b/.test(v) ? v : v.charAt(0).toLowerCase() + v.slice(1));
-function summary(m: (typeof models)[number]): string {
-  const own: readonly { label: string; value: string }[] = m.specs;
-  const shared = commonSpecs(m.code).filter((spec) => !spec.value.includes(' or '));
-  const find = (label: string) => (own.find((x) => x.label === label) ?? shared.find((x) => x.label === label))?.value;
-  const shape = find('Body shape');
-  const top = find('Top');
-  const body = find('Body wood');
-  const finish = find('Finish');
-  const facts = [
-    shape && !shape.startsWith('Unique') && shape,
-    top && `${lower(top)} top`,
-    body && `${lower(body)} body`,
-    finish && `${lower(finish)} finish`,
-  ].filter((fact): fact is string => Boolean(fact));
-  const line = facts.slice(0, 3).join(', ');
-  return line.charAt(0).toUpperCase() + line.slice(1);
-}
-
 const strip = models.map((m) => ({
   ...m,
   photo: getPhoto(m.showcase, 'frontCrop'),
-  summary: summary(m),
+  summary: modelSummary(m.code),
   heritage: heritage.has(m.code),
 }));;
 ---
@@ -101,7 +80,7 @@ const strip = models.map((m) => ({
                 <h2 class="heading mb-4">{f.title}</h2>
                 {f.intro && <p class="max-w-[36em] text-[17px] text-walnut">{f.intro}</p>}
               </div>
-              <div class="grid gap-x-12 gap-y-16 md:grid-cols-2">
+              <div class="grid items-start gap-x-12 gap-y-16 md:grid-cols-2">
                 {f.models.map((m) => (
                   <ModelShowcase model={m} stacked />
                 ))}

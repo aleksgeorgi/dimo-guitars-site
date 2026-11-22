@@ -5,7 +5,7 @@ import GuitarPhoto from '../components/GuitarPhoto.astro';
 import { models } from '../data/models';
 import { site } from '../data/site';
 import { signatures } from '../data/signatures';
-import { countByModel, featuredGuitars, guitars } from '../lib/inventory';
+import { countByModel, featuredGuitars, guitars, modelSummary } from '../lib/inventory';
 import { getPhoto } from '../lib/photos';
 
 const featured = featuredGuitars();
@@ -104,8 +104,8 @@ const sectionPad = 'container-site pt-[clamp(64px,8vw,112px)] pb-10';
                 {m.code}
                 <span class="sr-only">, {m.fullName}</span>
               </span>
-              <span class="text-[14px] text-walnut">Description coming soon.</span>
-              <span class="text-[13px] font-medium group-hover:text-navy group-hover:underline">
+              <span class="text-[14px] text-walnut">{modelSummary(m.code)}.</span>
+              <span class="mt-auto pt-1 text-[13px] font-medium group-hover:text-navy group-hover:underline">
                 {countByModel(m.code)} instruments →
               </span>
             </a>
