@@ -5,7 +5,7 @@
 import GuitarPhoto from './GuitarPhoto.astro';
 import Lightbox from './Lightbox.astro';
 import type { Model } from '../data/models';
-import { countByModel } from '../lib/inventory';
+import { commonSpecs, countByModel } from '../lib/inventory';
 import { getPhotos } from '../lib/photos';
 
 type Props = { model: Model; stacked?: boolean; flip?: boolean; eager?: boolean };
@@ -21,6 +21,10 @@ const pick = (angle: string) => {
 const front = pick('front');
 const details = ['back', 'frontCrop', 'headstock'].map(pick).filter((d) => d.photo);
 const count = countByModel(model.code);
+
+// The model's own facts first, then whatever every guitar of the model shares in the inventory.
+const own: readonly { label: string; value: string; href?: string }[] = model.specs;
+const specs = [...own, ...commonSpecs(model.code).filter((c) => !own.some((o) => o.label === c.label))];
 const titleId = `model-${model.slug}-title`;
 ---
 
@@ -70,11 +74,11 @@ const titleId = `model-${model.slug}-title`;
 
     <dl class="grid grid-cols-[minmax(110px,auto)_1fr] border-t border-rule text-[15px]">
       {
-        model.specs.map((spec) => (
+        specs.map((spec) => (
           <>
             <dt class="border-b border-rule py-3 pr-6 text-muted">{spec.label}</dt>
             <dd class="border-b border-rule py-3">
-              {'href' in spec && spec.href ? (
+              {spec.href ? (
                 <a href={spec.href} class="underline underline-offset-2">
                   {spec.value}
                 </a>
