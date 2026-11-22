@@ -220,3 +220,26 @@ export function commonSpecs(code: string): SpecRow[] {
     return [{ label, value: orList(distinct) }];
   });
 }
+
+// One line of facts about a model, e.g. "Single cut, inset carved maple top, high gloss nitro finish".
+// Used under the model name on Home and in the strip on the Guitars page. Only specs the whole
+// model shares are used, never a range.
+const lowerFirst = (v: string) => (names.test(v) ? v : v.charAt(0).toLowerCase() + v.slice(1));
+
+export function modelSummary(code: string): string {
+  const own: readonly { label: string; value: string }[] = getModel(code)?.specs ?? [];
+  const shared = commonSpecs(code).filter((spec) => !spec.value.includes(' or '));
+  const find = (label: string) => (own.find((x) => x.label === label) ?? shared.find((x) => x.label === label))?.value;
+  const shape = find('Body shape');
+  const top = find('Top');
+  const body = find('Body wood');
+  const finish = find('Finish');
+  const facts = [
+    shape && !shape.startsWith('Unique') && shape,
+    top && `${lowerFirst(top)} top`,
+    body && `${lowerFirst(body)} body`,
+    finish && `${lowerFirst(finish)} finish`,
+  ].filter((fact): fact is string => Boolean(fact));
+  const line = facts.slice(0, 3).join(', ');
+  return line.charAt(0).toUpperCase() + line.slice(1);
+}
