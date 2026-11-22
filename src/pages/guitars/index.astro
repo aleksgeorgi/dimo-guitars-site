@@ -4,17 +4,28 @@ import GuitarPhoto from '../../components/GuitarPhoto.astro';
 import ModelShowcase from '../../components/ModelShowcase.astro';
 import { families, getModel, models } from '../../data/models';
 import { site } from '../../data/site';
+import { sharedSpecs } from '../../lib/inventory';
 import { getPhoto } from '../../lib/photos';
 
 const sections = families.map((f) => ({ ...f, models: f.models.map((code) => getModel(code)!) }));
 const ogImage = getPhoto(models[0].showcase, 'front').image?.src;
+
+// True of every guitar, listed once at the bottom of the page.
+const everyGuitar = [
+  { label: 'Pickups', value: sharedSpecs.pickups },
+  { label: 'Controls', value: '5-way switch, 1 volume, 1 tone' },
+  { label: 'Frets', value: sharedSpecs.frets },
+  { label: 'Scale length', value: sharedSpecs.scale },
+  { label: 'Fretboard radius', value: sharedSpecs.radius },
+  { label: 'Headplate', value: sharedSpecs.headplate },
+];
 
 // The strip at the top: one body shot per model, linking down to its section.
 const heritage = new Set(families.filter((f) => f.models.length > 1).flatMap((f) => f.models as readonly string[]));
 const strip = models.map((m) => ({
   ...m,
   photo: getPhoto(m.showcase, 'frontCrop'),
-  body: m.specs.find((spec) => spec.label === 'Body')?.value,
+  body: m.specs.find((spec) => spec.label === 'Body shape')?.value,
   heritage: heritage.has(m.code),
 }));
 ---
@@ -79,6 +90,31 @@ const strip = models.map((m) => ({
       </section>
     ))
   }
+
+  <section class="border-t border-rule" aria-labelledby="every-guitar-title">
+    <div class="container-site grid gap-x-16 gap-y-8 py-[clamp(48px,6vw,96px)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+      <div>
+        <p class="label mb-2.5">Across the models</p>
+        <h2 id="every-guitar-title" class="heading">On every Dimo guitar</h2>
+      </div>
+      <div>
+        <dl class="grid grid-cols-[minmax(130px,auto)_1fr] border-t border-rule text-[15px]">
+          {
+            everyGuitar.map((spec) => (
+              <>
+                <dt class="border-b border-rule py-3 pr-6 text-muted">{spec.label}</dt>
+                <dd class="border-b border-rule py-3">{spec.value}</dd>
+              </>
+            ))
+          }
+        </dl>
+        <p class="label mt-7 mb-2">The five switch positions</p>
+        <ol class="flex list-decimal flex-col gap-1 pl-5 text-[15px]">
+          {sharedSpecs.switching.map((position) => <li>{position}</li>)}
+        </ol>
+      </div>
+    </div>
+  </section>
 
   <section class="border-t border-rule">
     <div class="container-site flex flex-wrap justify-center gap-3.5 py-[clamp(48px,6vw,80px)]">

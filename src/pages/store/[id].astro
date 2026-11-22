@@ -31,11 +31,10 @@ else if (available) actions.push({ label: 'Join the mailing list', href: '#newsl
 if (sold) actions.push({ label: 'Ask about a similar instrument', href: '#contact', subject: `Instrument similar to ${id}` });
 else actions.push({ label: 'Ask Dimo a question', href: '#contact', subject: `Question about ${name}` });
 
-const details = [
+const overview = [
   { label: 'Model', value: model.fullName },
   { label: 'Number', value: id },
   { label: 'Price', value: priceLabel(guitar) },
-  ...guitar.specs,
 ];
 
 const features = signaturesFor(id, model.code).map((s) => ({ label: s.title, href: `/about#${s.anchor}` }));
@@ -120,16 +119,45 @@ const features = signaturesFor(id, model.code).map((s) => ({ label: s.title, hre
 
       <div>
         <h2 class="mb-2.5 font-serif text-[26px] font-medium">The instrument</h2>
-        <dl class="grid grid-cols-2 border-t border-rule text-[15px]">
+        <dl class="grid grid-cols-[minmax(120px,2fr)_3fr] border-t border-rule text-[15px]">
           {
-            details.map((d) => (
+            overview.map((d) => (
               <>
-                <dt class="border-b border-rule py-2.5 text-muted">{d.label}</dt>
+                <dt class="border-b border-rule py-2.5 pr-4 text-muted">{d.label}</dt>
                 <dd class="border-b border-rule py-2.5">{d.value}</dd>
               </>
             ))
           }
         </dl>
+        {
+          guitar.specGroups.map((group) => (
+            <>
+              <h3 class="label mt-7 mb-2">{group.title}</h3>
+              <dl class="grid grid-cols-[minmax(120px,2fr)_3fr] border-t border-rule text-[15px]">
+                {group.rows.map((row) => (
+                  <>
+                    <dt class="border-b border-rule py-2.5 pr-4 text-muted">{row.label}</dt>
+                    <dd class="border-b border-rule py-2.5">
+                      {row.list ? (
+                        <ol class="flex list-decimal flex-col gap-1 pl-5">
+                          {row.list.map((item) => (
+                            <li>{item}</li>
+                          ))}
+                        </ol>
+                      ) : row.href ? (
+                        <a href={row.href} class="underline underline-offset-2">
+                          {row.value}
+                        </a>
+                      ) : (
+                        row.value
+                      )}
+                    </dd>
+                  </>
+                ))}
+              </dl>
+            </>
+          ))
+        }
         {
           guitar.specsPending && (
             <p class="mt-3 text-[14px] text-muted italic">Full specifications coming soon.</p>

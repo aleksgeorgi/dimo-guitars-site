@@ -3,6 +3,8 @@
 // `specs` are the model-level facts confirmed by Dimo (Nov 2026). They describe the model as a
 // whole; individual guitars can differ (M-102, M-106 and M-108 have a traditional set-neck joint,
 // and DH-005 has the R headstock). `href` links a spec to its section on /about.
+// Specs that come from the inventory (woods, finish, hardware) are added to these on /guitars
+// automatically, when every guitar of the model shares them: see commonSpecs in src/lib/inventory.ts.
 // `showcase` is the guitar whose photos represent the model on /guitars.
 // `description` is shown on /guitars once written; leave it empty until then.
 
@@ -17,7 +19,6 @@ type ModelDef = {
   specs: readonly Spec[];
 };
 
-const pickups: Spec = { label: 'Pickups', value: 'Dimo humbuckers' };
 const asymmetricJoint = 'Asymmetric 22° set-neck';
 const traditionalJoint = 'Traditional set-neck';
 
@@ -32,8 +33,7 @@ export const models = [
       { label: 'Neck joint', value: asymmetricJoint, href: '/about#neck-joint' },
       { label: 'Top', value: 'Inset carved maple', href: '/about#maple-top' },
       { label: 'Headstock', value: 'D design', href: '/about#headstock' },
-      { label: 'Body', value: 'Single cut' },
-      pickups,
+      { label: 'Body shape', value: 'Single cut' },
     ],
   },
   {
@@ -45,8 +45,7 @@ export const models = [
     specs: [
       { label: 'Neck joint', value: `${asymmetricJoint} on most instruments`, href: '/about#neck-joint' },
       { label: 'Headstock', value: 'Unique to the M' },
-      { label: 'Body', value: 'Unique to the M' },
-      pickups,
+      { label: 'Body shape', value: 'Unique to the M' },
     ],
   },
   {
@@ -58,8 +57,7 @@ export const models = [
     specs: [
       { label: 'Neck joint', value: asymmetricJoint, href: '/about#neck-joint' },
       { label: 'Headstock', value: 'R design' },
-      { label: 'Body', value: 'Double cut' },
-      pickups,
+      { label: 'Body shape', value: 'Double cut' },
     ],
   },
   {
@@ -71,8 +69,7 @@ export const models = [
     specs: [
       { label: 'Neck joint', value: traditionalJoint },
       { label: 'Headstock', value: 'R design' },
-      { label: 'Body', value: 'Double cut' },
-      pickups,
+      { label: 'Body shape', value: 'Double cut' },
     ],
   },
   {
@@ -84,8 +81,7 @@ export const models = [
     specs: [
       { label: 'Neck joint', value: traditionalJoint },
       { label: 'Headstock', value: 'D design', href: '/about#headstock' },
-      { label: 'Body', value: 'Single cut' },
-      pickups,
+      { label: 'Body shape', value: 'Single cut' },
     ],
   },
 ] as const satisfies readonly ModelDef[];
