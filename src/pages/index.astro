@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import GuitarCard from '../components/GuitarCard.astro';
 import GuitarPhoto from '../components/GuitarPhoto.astro';
-import { models } from '../data/models';
+import { families, models } from '../data/models';
 import { site } from '../data/site';
 import { signatures } from '../data/signatures';
 import { countByModel, featuredGuitars, guitars, modelSummary } from '../lib/inventory';
@@ -11,6 +11,9 @@ import { getPhoto } from '../lib/photos';
 const featured = featuredGuitars();
 const hero = getPhoto(featured[0]?.id ?? site.aboutGuitarId, 'side');
 const signatureCards = signatures.map((s) => ({ ...s, photo: getPhoto(site.aboutGuitarId, s.angle) }));
+
+// RC and DH, the models grouped as the Heritage collection on the Guitars page.
+const heritage = new Set(families.filter((f) => f.models.length > 1).flatMap((f) => f.models as readonly string[]));
 
 const sectionPad = 'container-site pt-[clamp(64px,8vw,112px)] pb-10';
 ---
@@ -104,6 +107,9 @@ const sectionPad = 'container-site pt-[clamp(64px,8vw,112px)] pb-10';
                 {m.code}
                 <span class="sr-only">, {m.fullName}</span>
               </span>
+              {heritage.has(m.code) && (
+                <span class="text-[11px] uppercase tracking-[0.2em] text-muted">Heritage collection</span>
+              )}
               <span class="text-[14px] text-walnut">{modelSummary(m.code)}.</span>
               <span class="mt-auto pt-1 text-[13px] font-medium group-hover:text-navy group-hover:underline">
                 {countByModel(m.code)} instruments →
