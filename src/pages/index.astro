@@ -1,11 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import GuitarCard from '../components/GuitarCard.astro';
 import GuitarPhoto from '../components/GuitarPhoto.astro';
 import ModelStrip from '../components/ModelStrip.astro';
 import { site } from '../data/site';
 import { signatures } from '../data/signatures';
-import { featuredGuitars, guitars } from '../lib/inventory';
+import { featuredGuitars } from '../lib/inventory';
 import { getPhoto } from '../lib/photos';
 
 const featured = featuredGuitars();
@@ -57,31 +56,6 @@ const sectionPad = 'container-site pt-[clamp(64px,8vw,112px)] pb-10';
       }
     </ul>
   </section>
-
-  {
-    featured.length > 0 && (
-      <section class={sectionPad} aria-labelledby="featured-title">
-        <div class="mb-10 flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p class="label mb-2">Fresh from the bench</p>
-            <h2 id="featured-title" class="heading">
-              Featured instruments
-            </h2>
-          </div>
-          <a href="/store" class="text-link">
-            See all {guitars.length} →
-          </a>
-        </div>
-        <ul class="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-7 lg:grid-cols-4">
-          {featured.map((g) => (
-            <li>
-              <GuitarCard guitar={g} />
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
 
   <section
     id="models"
