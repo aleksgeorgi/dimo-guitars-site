@@ -58,7 +58,7 @@ const titleId = `model-${model.slug}-title`;
       }
     </ul>
     <p class="text-[13px] text-muted">
-      Shown: <a href={`/store/${id.toLowerCase()}`} class="text-muted underline underline-offset-2">No. {id}</a>
+      Shown: <a href={`/store/${id.toLowerCase()}`} class="tap text-muted underline underline-offset-2">No. {id}</a>
     </p>
   </div>
 
@@ -79,7 +79,7 @@ const titleId = `model-${model.slug}-title`;
             <dt class="border-b border-rule py-3 pr-6 text-muted">{spec.label}</dt>
             <dd class="border-b border-rule py-3">
               {spec.href ? (
-                <a href={spec.href} class="underline underline-offset-2">
+                <a href={spec.href} class="tap underline underline-offset-2">
                   {spec.value}
                 </a>
               ) : (

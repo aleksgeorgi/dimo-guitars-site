@@ -140,6 +140,20 @@
     color: var(--paper);
   }
 
+  /* A larger touch area for a small text link, without changing the layout around it.
+     The invisible ::after extends past the text; taps on it count as taps on the link. */
+  .tap,
+  .text-link {
+    position: relative;
+  }
+
+  .tap::after,
+  .text-link::after {
+    content: '';
+    position: absolute;
+    inset: -13px -8px;
+  }
+
   .text-link {
     font-size: 14px;
     font-weight: 500;
