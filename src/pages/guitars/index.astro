@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import GuitarPhoto from '../../components/GuitarPhoto.astro';
 import ModelShowcase from '../../components/ModelShowcase.astro';
+import ModelStrip from '../../components/ModelStrip.astro';
 import { families, getModel, models } from '../../data/models';
 import { site } from '../../data/site';
-import { modelSummary, sharedSpecs } from '../../lib/inventory';
+import { sharedSpecs } from '../../lib/inventory';
 import { getPhoto } from '../../lib/photos';
 
 const sections = families.map((f) => ({ ...f, models: f.models.map((code) => getModel(code)!) }));
@@ -19,15 +19,6 @@ const everyGuitar = [
   { label: 'Fretboard radius', value: sharedSpecs.radius },
   { label: 'Headplate', value: sharedSpecs.headplate },
 ];
-
-// The strip at the top: one body shot per model, linking down to its section.
-const heritage = new Set(families.filter((f) => f.models.length > 1).flatMap((f) => f.models as readonly string[]));
-const strip = models.map((m) => ({
-  ...m,
-  photo: getPhoto(m.showcase, 'frontCrop'),
-  summary: modelSummary(m.code),
-  heritage: heritage.has(m.code),
-}));;
 ---
 
 <BaseLayout
@@ -40,31 +31,9 @@ const strip = models.map((m) => ({
     <p class="max-w-[36em] text-[17px] text-walnut">
       Four families of handmade electric guitars. Within each one, every instrument is one of a kind.
     </p>
-    <nav aria-label="Models" class="mt-9 border-t border-rule pt-7">
-      <ul
-        class="-mr-[clamp(20px,4vw,48px)] flex snap-x gap-4 overflow-x-auto pr-[clamp(20px,4vw,48px)] pb-3 lg:mr-0 lg:grid lg:grid-cols-5 lg:gap-5 lg:overflow-visible lg:pr-0 lg:pb-0">
-        {
-          strip.map((m, i) => (
-            <li class="w-[40vw] max-w-[230px] shrink-0 snap-start lg:w-auto lg:max-w-none">
-              <a href={`#${m.slug}`} class="group flex flex-col gap-3 text-ink no-underline hover:text-ink">
-                <GuitarPhoto
-                  photo={{ ...m.photo, aspect: '4 / 5' }}
-                  sizes="(min-width: 1240px) 215px, (min-width: 1024px) 18vw, 40vw"
-                  eager={i < 3}
-                />
-                <span class="flex flex-col gap-0.5 border-t border-rule pt-3">
-                  <span class="font-serif text-[22px] leading-[1.15] font-medium group-hover:underline group-hover:underline-offset-4 sm:text-[24px]">
-                    {m.fullName}
-                  </span>
-                  {m.heritage && <span class="text-[11px] uppercase tracking-[0.2em] text-muted">Heritage collection</span>}
-                  <span class="text-[13px] leading-snug text-muted">{m.summary}</span>
-                </span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+    <div class="mt-9 border-t border-rule pt-7">
+      <ModelStrip eager />
+    </div>
   </section>
 
   {

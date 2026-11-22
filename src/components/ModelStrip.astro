@@ -1,0 +1,47 @@
+---
+// A row of the five models: body photo, name and one line of facts each.
+// One row on desktop; on phones and tablets it scrolls sideways with the next card peeking in.
+// `base` is put in front of each link: '' on the Guitars page (jump down the page),
+// '/guitars' anywhere else (go to that model on the Guitars page).
+import GuitarPhoto from './GuitarPhoto.astro';
+import { families, models } from '../data/models';
+import { modelSummary } from '../lib/inventory';
+import { getPhoto } from '../lib/photos';
+
+type Props = { base?: string; eager?: boolean };
+const { base = '', eager = false } = Astro.props;
+
+const heritage = new Set(families.filter((f) => f.models.length > 1).flatMap((f) => f.models as readonly string[]));
+const strip = models.map((m) => ({
+  ...m,
+  photo: getPhoto(m.showcase, 'frontCrop'),
+  summary: modelSummary(m.code),
+  heritage: heritage.has(m.code),
+}));
+---
+
+<nav aria-label="Models">
+  <ul
+    class="-mr-[clamp(20px,4vw,48px)] flex snap-x gap-4 overflow-x-auto pr-[clamp(20px,4vw,48px)] pb-3 lg:mr-0 lg:grid lg:grid-cols-5 lg:gap-5 lg:overflow-visible lg:pr-0 lg:pb-0">
+    {
+      strip.map((m, i) => (
+        <li class="w-[40vw] max-w-[230px] shrink-0 snap-start lg:w-auto lg:max-w-none">
+          <a href={`${base}#${m.slug}`} class="group flex flex-col gap-3 text-ink no-underline hover:text-ink">
+            <GuitarPhoto
+              photo={{ ...m.photo, aspect: '4 / 5' }}
+              sizes="(min-width: 1240px) 215px, (min-width: 1024px) 18vw, 40vw"
+              eager={eager && i < 3}
+            />
+            <span class="flex flex-col gap-0.5 border-t border-rule pt-3">
+              <span class="font-serif text-[22px] leading-[1.15] font-medium group-hover:underline group-hover:underline-offset-4 sm:text-[24px]">
+                {m.fullName}
+              </span>
+              {m.heritage && <span class="text-[11px] uppercase tracking-[0.2em] text-muted">Heritage collection</span>}
+              <span class="text-[13px] leading-snug text-muted">{m.summary}</span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
