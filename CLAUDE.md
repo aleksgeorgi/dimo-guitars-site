@@ -40,7 +40,7 @@ Brand and catalog site for **Dimo Guitars**: handmade electric guitars built by 
 - Video: there's a lot of raw workshop footage. Planned: a background or promo video on the site, plus Shorts/Reels. If adding video, keep Lighthouse mobile performance at 90 or above (poster image, compressed self-hosted file or a lightweight YouTube embed, no autoplay with sound) and respect `prefers-reduced-motion`.
 - Reverb sync at build time (pull price and status).
 - Hidden pages to build out: Workshop & Tools, Jigs & Templates, Contact (possibly Pickups). The Guitars page is live; its model descriptions are still empty in `src/data/models.ts`.
-- Model descriptions and per-guitar descriptions (currently "Description coming soon"). Per-guitar specs are filled in from Dimo's spec sheet (Nov 2026). Prices on the site were deliberately not changed to that sheet's prices, and neck joints follow what Dimo said on Nov 13, not the sheet's joint column.
+- Model descriptions and per-guitar descriptions (currently "Description coming soon"). Per-guitar specs, prices and neck joints all come from Dimo's spec sheet (Nov 2026), which is the source of truth. Where it differs from what was said earlier (for example the neck joint on D-113, D-114, D-115, R-108 and M-108), the sheet wins.
 
 ## Working with Aleks
 - Strong in Python, SQL, APIs and system design; newer to Astro/Tailwind, so briefly explain framework-specific choices.

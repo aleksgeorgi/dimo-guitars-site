@@ -1,6 +1,5 @@
 import raw from '../data/inventory.csv?raw';
 import { getModel, models, type Model } from '../data/models';
-import { signaturesFor } from '../data/signatures';
 
 export const statuses = ['available', 'sold', 'hold', 'not-for-sale'] as const;
 export type Status = (typeof statuses)[number];
@@ -27,8 +26,9 @@ export const sharedSpecs = {
 } as const;
 
 const switches = ['rotary', 'toggle'];
+const joints = { asymmetric: 'Asymmetric 22° set-neck', traditional: 'Traditional set-neck' } as const;
 
-function specGroups(row: Record<string, string>, hasJoint: boolean): SpecGroup[] {
+function specGroups(row: Record<string, string>): SpecGroup[] {
   const filled = ['body_wood', 'neck_wood', 'fretboard', 'bridge', 'tuners'].some((k) => row[k]);
   const groups: SpecGroup[] = [
     {
@@ -51,9 +51,9 @@ function specGroups(row: Record<string, string>, hasJoint: boolean): SpecGroup[]
         { label: 'Scale length', value: filled ? sharedSpecs.scale : '' },
         { label: 'Fretboard radius', value: filled ? sharedSpecs.radius : '' },
         { label: 'Headplate', value: filled ? sharedSpecs.headplate : '' },
-        hasJoint
-          ? { label: 'Neck joint', value: 'Asymmetric 22° set-neck', href: '/about#neck-joint' }
-          : { label: 'Neck joint', value: 'Traditional set-neck' },
+        row.neck_joint === 'asymmetric'
+          ? { label: 'Neck joint', value: joints.asymmetric, href: '/about#neck-joint' }
+          : { label: 'Neck joint', value: row.neck_joint === 'traditional' ? joints.traditional : '' },
       ],
     },
     {
@@ -84,6 +84,8 @@ export type Guitar = {
   price: number | null;
   reverbUrl: string;
   featured: boolean;
+  // True when the guitar has Dimo's asymmetric 22° joint; false for a traditional set-neck.
+  asymmetricJoint: boolean;
   specGroups: SpecGroup[];
   specsPending: boolean;
   notes: string;
@@ -112,6 +114,9 @@ function parse(csv: string): Guitar[] {
       if (row.switch && !switches.includes(row.switch)) {
         throw new Error(`${where}: switch "${row.switch}" must be ${switches.join(' or ')}, or blank.`);
       }
+      if (row.neck_joint && !(row.neck_joint in joints)) {
+        throw new Error(`${where}: neck_joint "${row.neck_joint}" must be asymmetric or traditional, or blank.`);
+      }
       if (row.zero_fret && row.zero_fret !== 'yes') {
         throw new Error(`${where}: zero_fret "${row.zero_fret}" must be yes or blank.`);
       }
@@ -127,7 +132,8 @@ function parse(csv: string): Guitar[] {
         price: row.price ? Number(row.price) : null,
         reverbUrl: row.reverb_url,
         featured: row.featured === 'true',
-        specGroups: specGroups(row, signaturesFor(row.id, model.code).some((f) => f.anchor === 'neck-joint')),
+        asymmetricJoint: row.neck_joint === 'asymmetric',
+        specGroups: specGroups(row),
         specsPending: !row.body_wood && !row.neck_wood,
         notes: row.notes,
       };
@@ -192,6 +198,23 @@ const names = /^(Honduran|Santos|Claro|Gotoh|Kluson|Grover|Wilkinson|Schaller|Na
 function orList(values: string[]): string {
   const items = values.map((v, i) => (i === 0 || names.test(v) ? v : v.charAt(0).toLowerCase() + v.slice(1)));
   return items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} or ${items.at(-1)}`;
+}
+
+// The neck joint for a model as a whole: the joint all its guitars have, or "on most instruments"
+// when a few differ.
+export function modelNeckJoint(code: string): SpecRow | undefined {
+  const group = guitars.filter((g) => g.model.code === code);
+  if (group.length === 0) return undefined;
+  const asymmetric = group.filter((g) => g.asymmetricJoint).length;
+  if (asymmetric === 0) return { label: 'Neck joint', value: joints.traditional };
+  const mostly = asymmetric > group.length / 2;
+  const value =
+    asymmetric === group.length
+      ? joints.asymmetric
+      : mostly
+        ? `${joints.asymmetric} on most instruments`
+        : `${joints.traditional} on most instruments`;
+  return { label: 'Neck joint', value, href: mostly ? '/about#neck-joint' : undefined };
 }
 
 export function commonSpecs(code: string): SpecRow[] {

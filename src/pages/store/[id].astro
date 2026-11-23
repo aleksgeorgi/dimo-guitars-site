@@ -37,7 +37,7 @@ const overview = [
   { label: 'Price', value: priceLabel(guitar) },
 ];
 
-const features = signaturesFor(id, model.code).map((s) => ({ label: s.title, href: `/about#${s.anchor}` }));
+const features = signaturesFor(model.code, guitar.asymmetricJoint).map((s) => ({ label: s.title, href: `/about#${s.anchor}` }));
 ---
 
 <BaseLayout
