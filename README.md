@@ -57,17 +57,16 @@ One row per guitar. No commas inside fields.
 | `body_finish`, `neck_finish` | Finishes, e.g. `High gloss nitro`, `Poly`. |
 | `neck_wood`, `fretboard` | Neck and fretboard woods. |
 | `zero_fret` | `yes` or blank. |
+| `neck_joint` | `asymmetric` (Dimo's 22° joint) or `traditional`. It sets the neck joint row on the guitar page and whether the neck joint appears under its signature features. |
 | `bridge`, `tailpiece`, `tuners` | Hardware as Dimo names it. Blank if there is none (a wraparound bridge has no tailpiece). |
 | `switch` | `rotary` or `toggle`: the kind of 5-way switch. |
 | `notes` | Optional description for the guitar page. |
 
 Not in the CSV, because they are the same on every guitar: 22 frets, the scale length, the fretboard radius, the headplate, the pickups and the five switch positions. They are set once in `sharedSpecs` in `src/lib/inventory.ts`.
 
-The neck joint is not in the CSV either. It follows the same rules as the signature features below.
-
 The Guitars page picks up these specs by itself. Under each model it lists what every guitar of that model has in common, and where a spec takes two to four different values it shows the range, most common first ("Santos rosewood or ebony"). Wood grades such as AAAA are ignored for this. The short line under each name in the strip at the top of the page is built the same way.
 
-The "Signature features" list on a guitar page comes from `src/data/signatures.ts`, not the CSV: `byModel` says which features each model has, and `byGuitar` lists the individual guitars that differ.
+The "Signature features" list on a guitar page comes from two places: the neck joint from the guitar's `neck_joint` column, and the rest from `byModel` in `src/data/signatures.ts` (the inset maple top on D, the headstock on every model).
 
 When the Reverb shop opens, also update the "store coming soon" notes on `/store` (`src/pages/store/index.astro`) and on guitar pages (`src/pages/store/[id].astro`).
 

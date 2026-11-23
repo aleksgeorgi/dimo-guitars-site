@@ -5,7 +5,7 @@
 import GuitarPhoto from './GuitarPhoto.astro';
 import Lightbox from './Lightbox.astro';
 import type { Model } from '../data/models';
-import { commonSpecs, countByModel } from '../lib/inventory';
+import { commonSpecs, countByModel, modelNeckJoint } from '../lib/inventory';
 import { getPhotos } from '../lib/photos';
 
 type Props = { model: Model; stacked?: boolean; flip?: boolean; eager?: boolean };
@@ -22,9 +22,14 @@ const front = pick('front');
 const details = ['back', 'frontCrop', 'headstock'].map(pick).filter((d) => d.photo);
 const count = countByModel(model.code);
 
-// The model's own facts first, then whatever every guitar of the model shares in the inventory.
+// The neck joint, then the model's own facts, then whatever every guitar of the model shares in the inventory.
 const own: readonly { label: string; value: string; href?: string }[] = model.specs;
-const specs = [...own, ...commonSpecs(model.code).filter((c) => !own.some((o) => o.label === c.label))];
+const neckJoint = modelNeckJoint(model.code);
+const specs = [
+  ...(neckJoint ? [neckJoint] : []),
+  ...own,
+  ...commonSpecs(model.code).filter((c) => !own.some((o) => o.label === c.label)),
+];
 const titleId = `model-${model.slug}-title`;
 ---
 

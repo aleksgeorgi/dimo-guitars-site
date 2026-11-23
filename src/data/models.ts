@@ -1,8 +1,8 @@
 // Display order everywhere: D, M, R, RC, DH.
 //
-// `specs` are the model-level facts confirmed by Dimo (Nov 2026). They describe the model as a
-// whole; individual guitars can differ (M-102, M-106 and M-108 have a traditional set-neck joint,
-// and DH-005 has the R headstock). `href` links a spec to its section on /about.
+// `specs` are model-level facts set by hand (headstock, body shape, the D's inset top).
+// `href` links a spec to its section on /about. The neck joint is not here: it is set per guitar
+// in inventory.csv, and /guitars works out each model's line from that.
 // Specs that come from the inventory (woods, finish, hardware) are added to these on /guitars
 // automatically, when every guitar of the model shares them: see commonSpecs in src/lib/inventory.ts.
 // `showcase` is the guitar whose photos represent the model on /guitars.
@@ -19,8 +19,6 @@ type ModelDef = {
   specs: readonly Spec[];
 };
 
-const asymmetricJoint = 'Asymmetric 22° set-neck';
-const traditionalJoint = 'Traditional set-neck';
 
 export const models = [
   {
@@ -30,7 +28,6 @@ export const models = [
     showcase: 'D-105',
     description: '',
     specs: [
-      { label: 'Neck joint', value: asymmetricJoint, href: '/about#neck-joint' },
       { label: 'Top', value: 'Inset carved maple', href: '/about#maple-top' },
       { label: 'Headstock', value: 'D design', href: '/about#headstock' },
       { label: 'Body shape', value: 'Single cut' },
@@ -43,7 +40,6 @@ export const models = [
     showcase: 'M-103',
     description: '',
     specs: [
-      { label: 'Neck joint', value: `${asymmetricJoint} on most instruments`, href: '/about#neck-joint' },
       { label: 'Headstock', value: 'Unique to the M' },
       { label: 'Body shape', value: 'Unique to the M' },
     ],
@@ -55,7 +51,6 @@ export const models = [
     showcase: 'R-104',
     description: '',
     specs: [
-      { label: 'Neck joint', value: asymmetricJoint, href: '/about#neck-joint' },
       { label: 'Headstock', value: 'R design' },
       { label: 'Body shape', value: 'Double cut' },
     ],
@@ -67,7 +62,6 @@ export const models = [
     showcase: 'RC-101',
     description: '',
     specs: [
-      { label: 'Neck joint', value: traditionalJoint },
       { label: 'Headstock', value: 'R design' },
       { label: 'Body shape', value: 'Double cut' },
     ],
@@ -79,7 +73,6 @@ export const models = [
     showcase: 'DH-001',
     description: '',
     specs: [
-      { label: 'Neck joint', value: traditionalJoint },
       { label: 'Headstock', value: 'D design', href: '/about#headstock' },
       { label: 'Body shape', value: 'Single cut' },
     ],
