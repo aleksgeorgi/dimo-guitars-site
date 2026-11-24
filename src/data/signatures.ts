@@ -43,7 +43,7 @@ const byModel: Record<string, readonly Anchor[]> = {
   DH: ['headstock'],
 };
 
-// The neck joint is set per guitar, in the `neck_joint` column of inventory.csv.
+// The neck joint is set per guitar, in the `neck_joint` field of src/data/guitars/<ID>.json.
 export function signaturesFor(modelCode: string, asymmetricJoint: boolean) {
   const anchors: Anchor[] = [...(asymmetricJoint ? (['neck-joint'] as const) : []), ...(byModel[modelCode] ?? [])];
   return signatures.filter((s) => anchors.includes(s.anchor));

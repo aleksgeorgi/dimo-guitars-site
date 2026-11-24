@@ -1,0 +1,30 @@
+{
+  "id": "D-113",
+  "model": "D",
+  "status": "available",
+  "price": 2500,
+  "featured": false,
+  "reverb_url": "",
+  "photos": {
+    "front": "/src/assets/guitars/D-113/D-113_Front_Full_Body.jpg",
+    "back": "/src/assets/guitars/D-113/D-113_Back_Full_Body.jpg",
+    "headstock": "/src/assets/guitars/D-113/D-113_Headstocks.jpg",
+    "front_crop": "/src/assets/guitars/D-113/D-113_Front_Body_Crop.jpg",
+    "back_crop": "/src/assets/guitars/D-113/D-113_Back_Body_Crop.jpg",
+    "side": "/src/assets/guitars/D-113/D-113_Side_Body.jpg"
+  },
+  "body_wood": "Sapele",
+  "back_wood": "",
+  "top_wood": "Carved figured maple AAAA",
+  "body_finish": "High gloss nitro",
+  "neck_wood": "Honduran mahogany",
+  "neck_finish": "",
+  "fretboard": "Ebony",
+  "zero_fret": false,
+  "neck_joint": "traditional",
+  "bridge": "Gotoh",
+  "tailpiece": "Gotoh",
+  "tuners": "Grover Deluxe gold 3x3",
+  "switch": "rotary",
+  "notes": ""
+}

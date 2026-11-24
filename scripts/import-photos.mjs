@@ -1,7 +1,7 @@
 // Resizes original guitar photos into src/assets/guitars/<ID>/ and prints a report.
 // Usage: npm run photos [-- <source dir>] [-- --force]
 import { existsSync } from 'node:fs';
-import { copyFile, mkdir, readdir, readFile, stat } from 'node:fs/promises';
+import { copyFile, mkdir, readdir, stat } from 'node:fs/promises';
 import { join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -11,7 +11,7 @@ const args = process.argv.slice(2);
 const force = args.includes('--force');
 const source = resolve(root, args.find((a) => !a.startsWith('--')) ?? '../Photos/InventoryPhotos');
 const outDir = join(root, 'src/assets/guitars');
-const csvPath = join(root, 'src/data/inventory.csv');
+const guitarsDir = join(root, 'src/data/guitars');
 
 const MAX_EDGE = 2000;
 const QUALITY = 82;
@@ -34,21 +34,19 @@ if (!existsSync(source)) {
   process.exit(1);
 }
 
-const csvIds = (await readFile(csvPath, 'utf8'))
-  .trim()
-  .split(/\r?\n/)
-  .slice(1)
-  .map((line) => line.split(',')[0].trim())
-  .filter(Boolean);
+const ids = (await readdir(guitarsDir))
+  .filter((f) => f.endsWith('.json'))
+  .map((f) => f.slice(0, -'.json'.length))
+  .sort();
 
 const folders = (await readdir(source, { withFileTypes: true }))
   .filter((e) => e.isDirectory())
   .map((e) => e.name)
   .sort();
 
-const csvSet = new Set(csvIds);
+const idSet = new Set(ids);
 const folderSet = new Set(folders);
-const toImport = folders.filter((id) => csvSet.has(id));
+const toImport = folders.filter((id) => idSet.has(id));
 
 const jobs = [];
 const missing = {};
@@ -126,8 +124,8 @@ for (const logo of logos) {
 }
 
 const complete = toImport.filter((id) => !missing[id]);
-const notInCsv = folders.filter((id) => !csvSet.has(id));
-const noFolder = csvIds.filter((id) => !folderSet.has(id));
+const noGuitarFile = folders.filter((id) => !idSet.has(id));
+const noFolder = ids.filter((id) => !folderSet.has(id));
 const mb = (n) => `${(n / 1024 / 1024).toFixed(1)} MB`;
 const list = (items) => (items.length ? items.map((i) => `  ${i}`).join('\n') : '  none');
 
@@ -137,9 +135,9 @@ Photo report
 Source:   ${relative(root, source)}
 Output:   ${relative(root, outDir)}
 
-Guitars in CSV:                ${csvIds.length}
+Guitars in data:               ${ids.length}
 Folders found:                 ${folders.length}
-Guitars with all 6 photos:     ${complete.length}/${csvIds.length}
+Guitars with all 6 photos:     ${complete.length}/${ids.length}
 Photos resized:                ${written} written, ${skipped} unchanged (${jobs.length} total)
 Size:                          ${mb(bytesIn)} originals → ${mb(bytesOut)} resized
 
@@ -149,10 +147,10 @@ ${list(Object.entries(missing).map(([id, files]) => `${id}: ${files.join(', ')}`
 Unexpected files (not imported):
 ${list(Object.entries(extras).map(([id, files]) => `${id}: ${files.join(', ')}`))}
 
-Folders not in the CSV (not imported):
-${list(notInCsv)}
+Folders with no guitar file (not imported):
+${list(noGuitarFile)}
 
-CSV rows without a folder:
+Guitars without a folder:
 ${list(noFolder)}
 
 Logos (src/assets/brand):

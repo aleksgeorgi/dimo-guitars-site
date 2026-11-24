@@ -1,0 +1,30 @@
+{
+  "id": "D-115",
+  "model": "D",
+  "status": "available",
+  "price": 1500,
+  "featured": false,
+  "reverb_url": "",
+  "photos": {
+    "front": "/src/assets/guitars/D-115/D-115_Front_Full_Body.jpg",
+    "back": "/src/assets/guitars/D-115/D-115_Back_Full_Body.jpg",
+    "headstock": "/src/assets/guitars/D-115/D-115_Headstocks.jpg",
+    "front_crop": "/src/assets/guitars/D-115/D-115_Front_Body_Crop.jpg",
+    "back_crop": "/src/assets/guitars/D-115/D-115_Back_Body_Crop.jpg",
+    "side": "/src/assets/guitars/D-115/D-115_Side_Body.jpg"
+  },
+  "body_wood": "Mahogany",
+  "back_wood": "Figured maple",
+  "top_wood": "Carved figured maple AAAA",
+  "body_finish": "High gloss nitro",
+  "neck_wood": "Honduran mahogany",
+  "neck_finish": "",
+  "fretboard": "Ebony",
+  "zero_fret": false,
+  "neck_joint": "traditional",
+  "bridge": "Gotoh",
+  "tailpiece": "Gotoh",
+  "tuners": "Grover gold 3x3",
+  "switch": "rotary",
+  "notes": ""
+}

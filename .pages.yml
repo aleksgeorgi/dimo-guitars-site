@@ -1,0 +1,119 @@
+# Pages CMS (app.pagescms.org): the editing screen Dimo uses to change guitars and photos.
+# Every save is a commit to the branch chosen in Pages CMS; a commit to main deploys the site.
+# Only what is listed here can be edited there. Layout, styling and code are not exposed.
+# Field reference: https://pagescms.org/docs/configuration/
+
+media:
+  input: src/assets/guitars
+  output: /src/assets/guitars
+  extensions: [jpg, jpeg, png, webp]
+  # Phones often name every upload "image.jpg"; random names keep uploads from colliding.
+  # Each guitar's file stores the path, so the name itself does not matter.
+  rename: random
+
+content:
+  - name: guitars
+    label: Guitars
+    description: One page per guitar. Change the status, price, description, specs or photos, then Save.
+    type: collection
+    path: src/data/guitars
+    format: json
+    filename: '{fields.id}.json'
+    # Adding or removing a guitar also needs photos and a check of the store, so Aleks does that.
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      fields: [id, status, price]
+      primary: id
+      sort: [id, status, price]
+      search: [id, status]
+      default:
+        sort: id
+        order: asc
+    fields:
+      - name: id
+        label: Guitar
+        type: string
+        readonly: true
+      - name: model
+        label: Model
+        type: string
+        readonly: true
+      - name: status
+        label: Status
+        type: select
+        required: true
+        options:
+          values:
+            - { value: available, label: Available }
+            - { value: sold, label: Sold }
+            - { value: hold, label: On hold }
+            - { value: not-for-sale, label: Not for sale }
+      - name: price
+        label: Price (USD, whole dollars, no $ sign)
+        description: Leave empty to show "Price on request".
+        type: number
+        options:
+          min: 0
+          step: 1
+      - name: featured
+        label: Feature on the home page
+        type: boolean
+      - name: notes
+        label: Description
+        description: A few sentences about this guitar. Leave empty to show "Description coming soon".
+        type: text
+      - name: photos
+        label: Photos
+        description: To replace a photo, click it, remove it, then upload or pick the new one.
+        type: object
+        fields:
+          - name: front
+            label: 'Front, full body (main photo)'
+            type: image
+          - name: back
+            label: 'Back, full body'
+            type: image
+          - name: headstock
+            label: 'Headstock'
+            type: image
+          - name: front_crop
+            label: 'Front, body close-up'
+            type: image
+          - name: back_crop
+            label: 'Back, body close-up'
+            type: image
+          - name: side
+            label: 'Side of body'
+            type: image
+      - name: reverb_url
+        label: Reverb listing link
+        description: Leave empty until the Reverb shop is live.
+        type: string
+      - { name: body_wood, label: Body wood, type: string }
+      - { name: back_wood, label: Back wood, type: string }
+      - { name: top_wood, label: Top wood, type: string }
+      - { name: body_finish, label: Body finish, type: string }
+      - { name: neck_wood, label: Neck wood, type: string }
+      - { name: neck_finish, label: Neck finish, type: string }
+      - { name: fretboard, label: Fretboard, type: string }
+      - { name: zero_fret, label: Zero fret, type: boolean }
+      - name: neck_joint
+        label: Neck joint
+        type: select
+        options:
+          values:
+            - { value: asymmetric, label: Asymmetric 22° set-neck }
+            - { value: traditional, label: Traditional set-neck }
+      - { name: bridge, label: Bridge, type: string }
+      - { name: tailpiece, label: Tailpiece, type: string }
+      - { name: tuners, label: Tuners, type: string }
+      - name: switch
+        label: Pickup switch
+        type: select
+        options:
+          values:
+            - { value: rotary, label: Rotary }
+            - { value: toggle, label: Toggle }

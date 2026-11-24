@@ -1,0 +1,30 @@
+{
+  "id": "RC-109",
+  "model": "RC",
+  "status": "available",
+  "price": 1600,
+  "featured": false,
+  "reverb_url": "",
+  "photos": {
+    "front": "/src/assets/guitars/RC-109/RC-109_Front_Full_Body.jpg",
+    "back": "/src/assets/guitars/RC-109/RC-109_Back_Full_Body.jpg",
+    "headstock": "/src/assets/guitars/RC-109/RC-109_Headstocks.jpg",
+    "front_crop": "/src/assets/guitars/RC-109/RC-109_Front_Body_Crop.jpg",
+    "back_crop": "/src/assets/guitars/RC-109/RC-109_Back_Body_Crop.jpg",
+    "side": "/src/assets/guitars/RC-109/RC-109_Side_Body.jpg"
+  },
+  "body_wood": "Sapele",
+  "back_wood": "",
+  "top_wood": "",
+  "body_finish": "Nitro",
+  "neck_wood": "Honduran mahogany",
+  "neck_finish": "",
+  "fretboard": "Ebony",
+  "zero_fret": false,
+  "neck_joint": "traditional",
+  "bridge": "ABM wraparound gold",
+  "tailpiece": "",
+  "tuners": "Grover Locking 6-in-line gold",
+  "switch": "rotary",
+  "notes": ""
+}

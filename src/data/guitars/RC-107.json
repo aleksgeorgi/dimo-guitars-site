@@ -1,0 +1,30 @@
+{
+  "id": "RC-107",
+  "model": "RC",
+  "status": "available",
+  "price": 4000,
+  "featured": false,
+  "reverb_url": "",
+  "photos": {
+    "front": "/src/assets/guitars/RC-107/RC-107_Front_Full_Body.jpg",
+    "back": "/src/assets/guitars/RC-107/RC-107_Back_Full_Body.jpg",
+    "headstock": "/src/assets/guitars/RC-107/RC-107_Headstocks.jpg",
+    "front_crop": "/src/assets/guitars/RC-107/RC-107_Front_Body_Crop.jpg",
+    "back_crop": "/src/assets/guitars/RC-107/RC-107_Back_Body_Crop.jpg",
+    "side": "/src/assets/guitars/RC-107/RC-107_Side_Body.jpg"
+  },
+  "body_wood": "Honduran mahogany",
+  "back_wood": "Figured walnut",
+  "top_wood": "Exhibition Claro walnut AAAAA",
+  "body_finish": "Nitro",
+  "neck_wood": "Honduran mahogany",
+  "neck_finish": "",
+  "fretboard": "Santos rosewood / figured maple",
+  "zero_fret": false,
+  "neck_joint": "traditional",
+  "bridge": "Nashville Tune-o-matic",
+  "tailpiece": "Gotoh",
+  "tuners": "Grover Locking Revolution 6-in-line",
+  "switch": "rotary",
+  "notes": ""
+}

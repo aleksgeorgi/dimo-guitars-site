@@ -1,0 +1,30 @@
+{
+  "id": "R-104",
+  "model": "R",
+  "status": "available",
+  "price": 3000,
+  "featured": false,
+  "reverb_url": "",
+  "photos": {
+    "front": "/src/assets/guitars/R-104/R-104_Front_Full_Body.jpg",
+    "back": "/src/assets/guitars/R-104/R-104_Back_Full_Body.jpg",
+    "headstock": "/src/assets/guitars/R-104/R-104_Headstocks.jpg",
+    "front_crop": "/src/assets/guitars/R-104/R-104_Front_Body_Crop.jpg",
+    "back_crop": "/src/assets/guitars/R-104/R-104_Back_Body_Crop.jpg",
+    "side": "/src/assets/guitars/R-104/R-104_Side_Body.jpg"
+  },
+  "body_wood": "Honduran mahogany",
+  "back_wood": "",
+  "top_wood": "",
+  "body_finish": "Paint/poly",
+  "neck_wood": "Maple",
+  "neck_finish": "Poly",
+  "fretboard": "Ebony",
+  "zero_fret": true,
+  "neck_joint": "asymmetric",
+  "bridge": "Gotoh",
+  "tailpiece": "Gotoh",
+  "tuners": "Grover Locking 6-in-line",
+  "switch": "toggle",
+  "notes": ""
+}

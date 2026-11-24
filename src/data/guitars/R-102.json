@@ -1,0 +1,30 @@
+{
+  "id": "R-102",
+  "model": "R",
+  "status": "available",
+  "price": 2500,
+  "featured": false,
+  "reverb_url": "",
+  "photos": {
+    "front": "/src/assets/guitars/R-102/R-102_Front_Full_Body.jpg",
+    "back": "/src/assets/guitars/R-102/R-102_Back_Full_Body.jpg",
+    "headstock": "/src/assets/guitars/R-102/R-102_Headstocks.jpg",
+    "front_crop": "/src/assets/guitars/R-102/R-102_Front_Body_Crop.jpg",
+    "back_crop": "/src/assets/guitars/R-102/R-102_Back_Body_Crop.jpg",
+    "side": "/src/assets/guitars/R-102/R-102_Side_Body.jpg"
+  },
+  "body_wood": "Honduran mahogany",
+  "back_wood": "",
+  "top_wood": "Spalted maple",
+  "body_finish": "Paint/poly",
+  "neck_wood": "Maple",
+  "neck_finish": "Poly",
+  "fretboard": "Santos rosewood",
+  "zero_fret": false,
+  "neck_joint": "asymmetric",
+  "bridge": "Gotoh",
+  "tailpiece": "Gotoh",
+  "tuners": "Grover Locking 6-in-line",
+  "switch": "rotary",
+  "notes": ""
+}

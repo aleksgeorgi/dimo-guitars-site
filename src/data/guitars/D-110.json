@@ -1,0 +1,30 @@
+{
+  "id": "D-110",
+  "model": "D",
+  "status": "available",
+  "price": 2500,
+  "featured": false,
+  "reverb_url": "",
+  "photos": {
+    "front": "/src/assets/guitars/D-110/D-110_Front_Full_Body.jpg",
+    "back": "/src/assets/guitars/D-110/D-110_Back_Full_Body.jpg",
+    "headstock": "/src/assets/guitars/D-110/D-110_Headstocks.jpg",
+    "front_crop": "/src/assets/guitars/D-110/D-110_Front_Body_Crop.jpg",
+    "back_crop": "/src/assets/guitars/D-110/D-110_Back_Body_Crop.jpg",
+    "side": "/src/assets/guitars/D-110/D-110_Side_Body.jpg"
+  },
+  "body_wood": "Chambered sapele",
+  "back_wood": "",
+  "top_wood": "Carved figured maple AAAA",
+  "body_finish": "High gloss nitro",
+  "neck_wood": "Honduran mahogany",
+  "neck_finish": "",
+  "fretboard": "Ebony / figured maple",
+  "zero_fret": true,
+  "neck_joint": "asymmetric",
+  "bridge": "Gotoh",
+  "tailpiece": "Gotoh",
+  "tuners": "Kluson Deluxe 3x3",
+  "switch": "rotary",
+  "notes": ""
+}

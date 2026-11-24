@@ -21,7 +21,36 @@ export type Photo = {
   image: ImageMetadata | null;
 };
 
-const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/guitars/**/*.jpg', { eager: true });
+const files = import.meta.glob<{ default: ImageMetadata }>('/src/assets/guitars/**/*.{jpg,jpeg,png,webp}', {
+  eager: true,
+});
+
+// Each guitar's JSON names its photos by path (set by hand or uploaded through Pages CMS).
+// Keys there are snake_case to match the other JSON fields.
+const guitarFiles = import.meta.glob<{ photos?: Record<string, string> }>('/src/data/guitars/*.json', {
+  eager: true,
+  import: 'default',
+});
+const jsonKey: Record<AngleKey, string> = {
+  front: 'front',
+  back: 'back',
+  headstock: 'headstock',
+  frontCrop: 'front_crop',
+  backCrop: 'back_crop',
+  side: 'side',
+};
+
+function photoPath(id: string, angle: AngleKey): string {
+  const set = guitarFiles[`/src/data/guitars/${id}.json`]?.photos?.[jsonKey[angle]];
+  if (set) {
+    const path = set.startsWith('/') ? set : `/${set}`;
+    if (!files[path]) throw new Error(`src/data/guitars/${id}.json: photo "${set}" not found.`);
+    return path;
+  }
+  // Blank in the JSON: fall back to the file name `npm run photos` writes.
+  const def = angles.find((a) => a.key === angle)!;
+  return `/src/assets/guitars/${id}/${id}${def.suffix}`;
+}
 
 export function getPhoto(id: string, angle: AngleKey): Photo {
   const def = angles.find((a) => a.key === angle)!;
@@ -30,7 +59,7 @@ export function getPhoto(id: string, angle: AngleKey): Photo {
     aspect: def.aspect,
     alt: `Dimo ${id} handmade electric guitar, ${def.alt}`,
     label: def.label,
-    image: files[`/src/assets/guitars/${id}/${id}${def.suffix}`]?.default ?? null,
+    image: files[photoPath(id, angle)]?.default ?? null,
   };
 }
 

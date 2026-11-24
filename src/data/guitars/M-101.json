@@ -1,0 +1,30 @@
+{
+  "id": "M-101",
+  "model": "M",
+  "status": "available",
+  "price": 2500,
+  "featured": false,
+  "reverb_url": "",
+  "photos": {
+    "front": "/src/assets/guitars/M-101/M-101_Front_Full_Body.jpg",
+    "back": "/src/assets/guitars/M-101/M-101_Back_Full_Body.jpg",
+    "headstock": "/src/assets/guitars/M-101/M-101_Headstocks.jpg",
+    "front_crop": "/src/assets/guitars/M-101/M-101_Front_Body_Crop.jpg",
+    "back_crop": "/src/assets/guitars/M-101/M-101_Back_Body_Crop.jpg",
+    "side": "/src/assets/guitars/M-101/M-101_Side_Body.jpg"
+  },
+  "body_wood": "Honduran mahogany",
+  "back_wood": "",
+  "top_wood": "",
+  "body_finish": "Paint/poly",
+  "neck_wood": "Maple",
+  "neck_finish": "Poly",
+  "fretboard": "Santos rosewood",
+  "zero_fret": false,
+  "neck_joint": "asymmetric",
+  "bridge": "Wilkinson/Gotoh VS-100N tremolo",
+  "tailpiece": "",
+  "tuners": "Grover Locking 6-in-line",
+  "switch": "toggle",
+  "notes": ""
+}

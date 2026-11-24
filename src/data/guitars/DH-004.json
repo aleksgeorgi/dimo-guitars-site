@@ -1,0 +1,30 @@
+{
+  "id": "DH-004",
+  "model": "DH",
+  "status": "available",
+  "price": 3000,
+  "featured": false,
+  "reverb_url": "",
+  "photos": {
+    "front": "/src/assets/guitars/DH-004/DH-004_Front_Full_Body.jpg",
+    "back": "/src/assets/guitars/DH-004/DH-004_Back_Full_Body.jpg",
+    "headstock": "/src/assets/guitars/DH-004/DH-004_Headstocks.jpg",
+    "front_crop": "/src/assets/guitars/DH-004/DH-004_Front_Body_Crop.jpg",
+    "back_crop": "/src/assets/guitars/DH-004/DH-004_Back_Body_Crop.jpg",
+    "side": "/src/assets/guitars/DH-004/DH-004_Side_Body.jpg"
+  },
+  "body_wood": "Mahogany",
+  "back_wood": "Figured maple AAAA",
+  "top_wood": "Carved figured maple AAAA",
+  "body_finish": "High gloss nitro",
+  "neck_wood": "Honduran mahogany",
+  "neck_finish": "",
+  "fretboard": "Ebony",
+  "zero_fret": false,
+  "neck_joint": "traditional",
+  "bridge": "Nashville Tune-o-matic gold",
+  "tailpiece": "Thin body trapeze gold",
+  "tuners": "Grover Deluxe 3x3 gold",
+  "switch": "rotary",
+  "notes": ""
+}

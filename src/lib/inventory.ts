@@ -1,4 +1,3 @@
-import raw from '../data/inventory.csv?raw';
 import { getModel, models, type Model } from '../data/models';
 
 export const statuses = ['available', 'sold', 'hold', 'not-for-sale'] as const;
@@ -8,7 +7,7 @@ export type Status = (typeof statuses)[number];
 export type SpecRow = { label: string; value: string; href?: string; list?: readonly string[] };
 export type SpecGroup = { title: string; rows: SpecRow[] };
 
-// True of every Dimo guitar, so they live here instead of in 46 CSV rows.
+// True of every Dimo guitar, so they live here instead of in 46 guitar files.
 export const sharedSpecs = {
   frets: '22',
   scale: '25 3/16 in (640 mm)',
@@ -91,17 +90,36 @@ export type Guitar = {
   notes: string;
 };
 
-function parse(csv: string): Guitar[] {
-  const [headerLine, ...lines] = csv.trim().split(/\r?\n/);
-  const headers = headerLine.split(',').map((h) => h.trim());
+// One JSON file per guitar in src/data/guitars/, edited by hand or through Pages CMS (.pages.yml).
+// Values are flattened to strings here so the checks and specGroups() read them the way they
+// read the old inventory.csv columns.
+const files = import.meta.glob<Record<string, unknown>>('/src/data/guitars/*.json', {
+  eager: true,
+  import: 'default',
+});
 
-  return lines
-    .filter((line) => line.trim() !== '')
-    .map((line, i) => {
-      const cells = line.split(',').map((c) => c.trim());
-      const row = Object.fromEntries(headers.map((h, j) => [h, cells[j] ?? '']));
-      const where = `inventory.csv line ${i + 2} (${row.id || 'no id'})`;
+function asText(value: unknown): string {
+  if (value === null || value === undefined || value === false) return '';
+  return String(value).trim();
+}
 
+function parse(entries: Record<string, Record<string, unknown>>): Guitar[] {
+  return Object.entries(entries)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([path, data]) => {
+      const file = path.split('/').pop()!;
+      const row: Record<string, string> = Object.fromEntries(
+        Object.entries(data)
+          .filter(([, v]) => typeof v !== 'object' || v === null)
+          .map(([k, v]) => [k, asText(v)]),
+      );
+      row.zero_fret = data.zero_fret === true ? 'yes' : '';
+      row.featured = data.featured === true ? 'true' : 'false';
+      const where = `src/data/guitars/${file}`;
+
+      if (`${row.id}.json` !== file) {
+        throw new Error(`${where}: id "${row.id}" must match the file name.`);
+      }
       const model = getModel(row.model);
       if (!model) {
         throw new Error(
@@ -117,11 +135,8 @@ function parse(csv: string): Guitar[] {
       if (row.neck_joint && !(row.neck_joint in joints)) {
         throw new Error(`${where}: neck_joint "${row.neck_joint}" must be asymmetric or traditional, or blank.`);
       }
-      if (row.zero_fret && row.zero_fret !== 'yes') {
-        throw new Error(`${where}: zero_fret "${row.zero_fret}" must be yes or blank.`);
-      }
       if (row.price && !/^\d+$/.test(row.price)) {
-        throw new Error(`${where}: price "${row.price}" must be whole USD with no symbols.`);
+        throw new Error(`${where}: price "${row.price}" must be a whole number of USD.`);
       }
 
       return {
@@ -142,7 +157,7 @@ function parse(csv: string): Guitar[] {
 
 const modelOrder = models.map((m) => m.code) as string[];
 
-export const guitars: Guitar[] = parse(raw).sort(
+export const guitars: Guitar[] = parse(files).sort(
   (a, b) => modelOrder.indexOf(a.model.code) - modelOrder.indexOf(b.model.code) || a.id.localeCompare(b.id),
 );
 
@@ -162,7 +177,7 @@ export function getGuitar(id: string): Guitar | undefined {
   return guitars.find((g) => g.id === id);
 }
 
-// Guitars marked `featured` in the CSV; until any are, the highest-priced available ones.
+// Guitars marked `featured` in their JSON; until any are, the highest-priced available ones.
 export function featuredGuitars(limit = 4): Guitar[] {
   const featured = guitars.filter((g) => g.featured);
   if (featured.length > 0) return featured.slice(0, limit);

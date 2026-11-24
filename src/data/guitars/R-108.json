@@ -1,0 +1,30 @@
+{
+  "id": "R-108",
+  "model": "R",
+  "status": "available",
+  "price": 1500,
+  "featured": false,
+  "reverb_url": "",
+  "photos": {
+    "front": "/src/assets/guitars/R-108/R-108_Front_Full_Body.jpg",
+    "back": "/src/assets/guitars/R-108/R-108_Back_Full_Body.jpg",
+    "headstock": "/src/assets/guitars/R-108/R-108_Headstocks.jpg",
+    "front_crop": "/src/assets/guitars/R-108/R-108_Front_Body_Crop.jpg",
+    "back_crop": "/src/assets/guitars/R-108/R-108_Back_Body_Crop.jpg",
+    "side": "/src/assets/guitars/R-108/R-108_Side_Body.jpg"
+  },
+  "body_wood": "Honduran mahogany",
+  "back_wood": "",
+  "top_wood": "",
+  "body_finish": "Paint/poly",
+  "neck_wood": "Maple",
+  "neck_finish": "Nitro",
+  "fretboard": "Santos rosewood",
+  "zero_fret": false,
+  "neck_joint": "traditional",
+  "bridge": "Gotoh",
+  "tailpiece": "Gotoh",
+  "tuners": "Grover 6-in-line",
+  "switch": "toggle",
+  "notes": ""
+}

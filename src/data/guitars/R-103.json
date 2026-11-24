@@ -1,0 +1,30 @@
+{
+  "id": "R-103",
+  "model": "R",
+  "status": "available",
+  "price": 4000,
+  "featured": false,
+  "reverb_url": "",
+  "photos": {
+    "front": "/src/assets/guitars/R-103/R-103_Front_Full_Body.jpg",
+    "back": "/src/assets/guitars/R-103/R-103_Back_Full_Body.jpg",
+    "headstock": "/src/assets/guitars/R-103/R-103_Headstocks.jpg",
+    "front_crop": "/src/assets/guitars/R-103/R-103_Front_Body_Crop.jpg",
+    "back_crop": "/src/assets/guitars/R-103/R-103_Back_Body_Crop.jpg",
+    "side": "/src/assets/guitars/R-103/R-103_Side_Body.jpg"
+  },
+  "body_wood": "Honduran mahogany",
+  "back_wood": "",
+  "top_wood": "",
+  "body_finish": "Paint/poly",
+  "neck_wood": "Maple",
+  "neck_finish": "Poly",
+  "fretboard": "Santos rosewood",
+  "zero_fret": true,
+  "neck_joint": "asymmetric",
+  "bridge": "Gotoh",
+  "tailpiece": "Gotoh",
+  "tuners": "Kluson Locking 6-in-line",
+  "switch": "toggle",
+  "notes": ""
+}

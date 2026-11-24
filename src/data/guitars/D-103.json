@@ -1,0 +1,30 @@
+{
+  "id": "D-103",
+  "model": "D",
+  "status": "available",
+  "price": 3500,
+  "featured": false,
+  "reverb_url": "",
+  "photos": {
+    "front": "/src/assets/guitars/D-103/D-103_Front_Full_Body.jpg",
+    "back": "/src/assets/guitars/D-103/D-103_Back_Full_Body.jpg",
+    "headstock": "/src/assets/guitars/D-103/D-103_Headstocks.jpg",
+    "front_crop": "/src/assets/guitars/D-103/D-103_Front_Body_Crop.jpg",
+    "back_crop": "/src/assets/guitars/D-103/D-103_Back_Body_Crop.jpg",
+    "side": "/src/assets/guitars/D-103/D-103_Side_Body.jpg"
+  },
+  "body_wood": "Chambered sapele",
+  "back_wood": "",
+  "top_wood": "Carved figured maple AAAA",
+  "body_finish": "High gloss nitro",
+  "neck_wood": "Honduran mahogany",
+  "neck_finish": "",
+  "fretboard": "Ebony",
+  "zero_fret": true,
+  "neck_joint": "asymmetric",
+  "bridge": "Gotoh",
+  "tailpiece": "Gotoh",
+  "tuners": "Kluson 3x3 Revolution Series G-Mounted",
+  "switch": "rotary",
+  "notes": ""
+}

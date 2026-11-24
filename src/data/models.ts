@@ -2,7 +2,7 @@
 //
 // `specs` are model-level facts set by hand (headstock, body shape, the D's inset top).
 // `href` links a spec to its section on /about. The neck joint is not here: it is set per guitar
-// in inventory.csv, and /guitars works out each model's line from that.
+// in src/data/guitars/, and /guitars works out each model's line from that.
 // Specs that come from the inventory (woods, finish, hardware) are added to these on /guitars
 // automatically, when every guitar of the model shares them: see commonSpecs in src/lib/inventory.ts.
 // `showcase` is the guitar whose photos represent the model on /guitars.

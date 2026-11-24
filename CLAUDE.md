@@ -16,7 +16,7 @@ Brand and catalog site for **Dimo Guitars**: handmade electric guitars built by 
 ## Sources of truth
 - `../CURSOR_BRIEF.md` (workspace root, outside the repo): the full build spec. Read it before structural changes. Design wins on look; the brief wins on structure, data and behavior.
 - `design/dimo-design.html` and `design/screens/*.png`: the visual design.
-- `src/data/inventory.csv`: one row per guitar (46). `src/data/models.ts`: model codes D, M, R, RC, DH (names not final). `src/data/site.ts`: which pages are visible.
+- `src/data/guitars/<ID>.json`: one file per guitar (46), edited by Dimo through Pages CMS (`.pages.yml`). `src/data/models.ts`: model codes D, M, R, RC, DH (names not final). `src/data/site.ts`: which pages are visible.
 - `content/copy/DGPhilosophy.md`: About page copy. Render as written.
 - Original photos live in `../Photos/` and are never committed. Run `npm run photos` to import resized copies.
 - Cloud sessions (Claude Code on the web) only see the repo, not `../CURSOR_BRIEF.md` or `../Photos/`. Photo imports have to run on Aleks's computer.
@@ -31,7 +31,7 @@ Brand and catalog site for **Dimo Guitars**: handmade electric guitars built by 
 - No React, CMS, backend, database or analytics in v1.
 
 ## Business decisions that shape the site
-- The site is a catalog and brand home, not a sales funnel. Guitars will be released for sale gradually, so the `status` values (`available | sold | hold | not-for-sale`) matter and should be easy to change in the CSV.
+- The site is a catalog and brand home, not a sales funnel. Guitars will be released for sale gradually, so the `status` values (`available | sold | hold | not-for-sale`) matter and should be easy to change in each guitar's file.
 - Contact email: `dimoguitarsnyc@gmail.com`. Business name everywhere: "Dimo Guitars".
 - Policy pages still needed before Reverb launches: return/refund, shipping and insurance, terms of sale. They must match the Reverb shop's policies, which aren't written yet. Don't invent policy terms; scaffold pages with clear `TODO` placeholders if asked. `/privacy` exists and is marked `TODO: review`.
 

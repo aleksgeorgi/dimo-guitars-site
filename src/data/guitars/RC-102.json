@@ -1,0 +1,30 @@
+{
+  "id": "RC-102",
+  "model": "RC",
+  "status": "available",
+  "price": 1800,
+  "featured": false,
+  "reverb_url": "",
+  "photos": {
+    "front": "/src/assets/guitars/RC-102/RC-102_Front_Full_Body.jpg",
+    "back": "/src/assets/guitars/RC-102/RC-102_Back_Full_Body.jpg",
+    "headstock": "/src/assets/guitars/RC-102/RC-102_Headstocks.jpg",
+    "front_crop": "/src/assets/guitars/RC-102/RC-102_Front_Body_Crop.jpg",
+    "back_crop": "/src/assets/guitars/RC-102/RC-102_Back_Body_Crop.jpg",
+    "side": "/src/assets/guitars/RC-102/RC-102_Side_Body.jpg"
+  },
+  "body_wood": "Honduran mahogany",
+  "back_wood": "",
+  "top_wood": "Spalted maple",
+  "body_finish": "Nitro",
+  "neck_wood": "Honduran mahogany",
+  "neck_finish": "",
+  "fretboard": "Santos rosewood",
+  "zero_fret": false,
+  "neck_joint": "traditional",
+  "bridge": "Gotoh",
+  "tailpiece": "Gotoh",
+  "tuners": "Grover Locking 6-in-line",
+  "switch": "rotary",
+  "notes": ""
+}
